@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::controller(AuthController::class)->group(function () {
+    Route::prefix('/auth')->group(function () {
+        Route::get('/login', 'page_login');
+        Route::get('/register', 'page_register');
+    });
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/', 'index');
