@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -13,7 +14,8 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    function page_register() {
+    function page_register()
+    {
         return view('auth.register');
     }
 }
