@@ -42,10 +42,10 @@
                         <ul class="navbar-nav ml-auto"><a href="index.html">
                             </a>
                             <li class="nav-item"><a href="index.html">
-                                </a><a class="nav-link" href="index.html">Daftar</a>
+                                </a><a class="nav-link" href="{{route('register')}}">Daftar</a>
                             </li>
                             <li class="nav-item"><a href="index.html">
-                                </a><a class="nav-link" href="index.html">Masuk</a>
+                                </a><a class="nav-link" href="{{route('login')}}">Masuk</a>
                             </li>
 
                         </ul>
