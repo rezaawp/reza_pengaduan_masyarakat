@@ -1,5 +1,6 @@
 {
     "Log in": "Masuk",
+    "Sign in": "Masuk",
     "Forgot your password?": "Lupa password kamu?",
     "Remember me": "Ingatkan sesi login",
     "Already registered?": "Sudah pernah daftar?",
@@ -7,5 +8,11 @@
     "Confirm Password": "Konfirmasi Password",
     "Name": "Nama",
     "Not Found": "Tidak Ditemukan",
-    "Page Not Found": "Halaman Tidak Dapat Ditemukan"
+    "Page Not Found": "Halaman Tidak Dapat Ditemukan",
+    "Login to your account": "Login ke akun kamu",
+    "I forgot password": "Lupa password",
+    "Login with Google": "Login dengan google",
+    "Don't have account yet?": "Belum punya akun?",
+    "Sign up": "Daftar",
+    "Or": "Atau"
 }
