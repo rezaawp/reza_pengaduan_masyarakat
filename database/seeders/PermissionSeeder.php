@@ -19,41 +19,45 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => 'menulis laporan pengaduan']);
+        Permission::create(['name' => 'verifikasi dan validasi']);
+        Permission::create(['name' => 'memberikan tanggapan']);
+        Permission::create(['name' => 'generate laporan']);
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'writer']);
-        $role1->givePermissionTo('edit articles');
-        $role1->givePermissionTo('delete articles');
+        $role1 = Role::create(['name' => 'admin']);
+        $role1->givePermissionTo('verifikasi dan validasi');
+        $role1->givePermissionTo('memberikan tanggapan');
+        $role1->givePermissionTo('menulis laporan pengaduan');
 
-        $role2 = Role::create(['name' => 'admin']);
-        $role2->givePermissionTo('publish articles');
-        $role2->givePermissionTo('unpublish articles');
+        $role2 = Role::create(['name' => 'petugas']);
+        $role2->givePermissionTo('verifikasi dan validasi');
+        $role2->givePermissionTo('memberikan tanggapan');
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
+        $role3 = Role::create(['name' => 'masyarakat']);
+        $role3->givePermissionTo('menulis laporan pengaduan');
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create demo users
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example User',
-            'email' => 'test@example.com',
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
         ]);
 
         $user->assignRole($role1);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example Admin User',
-            'email' => 'admin@example.com',
+            'name' => 'Petugas User',
+            'email' => 'petugas@example.com',
         ]);
+
         $user->assignRole($role2);
 
         $user = \App\Models\User::factory()->create([
             'name' => 'Example Super-Admin User',
-            'email' => 'superadmin@example.com',
+            'email' => 'masyarakat@example.com',
         ]);
+
         $user->assignRole($role3);
     }
 }

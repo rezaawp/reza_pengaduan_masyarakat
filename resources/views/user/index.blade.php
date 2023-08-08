@@ -41,13 +41,7 @@
                         </a>
                         <ul class="navbar-nav ml-auto"><a href="index.html">
                             </a>
-                            <li class="nav-item"><a href="index.html">
-                                </a><a class="nav-link" href="{{route('register')}}">Daftar</a>
-                            </li>
-                            <li class="nav-item"><a href="index.html">
-                                </a><a class="nav-link" href="{{route('login')}}">Masuk</a>
-                            </li>
-
+                            <x-auth.nav-items />
                         </ul>
                     </div>
                 </nav>
@@ -235,9 +229,9 @@
                         <div class="col-lg-4 col-sm-12 col-md-4">
                             <div class="box_main active">
                                 <!-- <div class="house_icon">
-                                                                                                         <img src="images/icon1.png" class="image_1">
-                                                                                                         <img src="images/icon1.png" class="image_2">
-                                                                                                      </div> -->
+                                                                                                                 <img src="images/icon1.png" class="image_1">
+                                                                                                                 <img src="images/icon1.png" class="image_2">
+                                                                                                              </div> -->
                                 <h3 class="decorate_text">Menanggapi Secepatnya</h3>
                                 <p class="tation_text">Kami akan menanggapi laporan dari masyarakt secepatnya</p>
                                 <div class="readmore_bt"><a href="#">Read More</a></div>
@@ -246,9 +240,9 @@
                         <div class="col-lg-4 col-sm-12 col-md-4">
                             <div class="box_main">
                                 <!-- <div class="house_icon">
-                                                                                                         <img src="images/icon2.png" class="image_1">
-                                                                                                         <img src="images/icon2.png" class="image_2">
-                                                                                                      </div> -->
+                                                                                                                 <img src="images/icon2.png" class="image_1">
+                                                                                                                 <img src="images/icon2.png" class="image_2">
+                                                                                                              </div> -->
                                 <h3 class="decorate_text">Perbaikan Fasilitas</h3>
                                 <p class="tation_text">Kami akan memperbaiki fasilitas yang rusak berdasarkan laporan yang
                                     masuk dari masyrakat</p>
@@ -258,9 +252,9 @@
                         <div class="col-lg-4 col-sm-12 col-md-4">
                             <div class="box_main">
                                 <!-- <div class="house_icon">
-                                                                                                         <img src="images/icon3.png" class="image_1">
-                                                                                                         <img src="images/icon3.png" class="image_2">
-                                                                                                      </div> -->
+                                                                                                                 <img src="images/icon3.png" class="image_1">
+                                                                                                                 <img src="images/icon3.png" class="image_2">
+                                                                                                              </div> -->
                                 <h3 class="decorate_text">Rekomendasi Fasilitas</h3>
                                 <p class="tation_text">Kami menerima rekomendasi fasilitas dari masyarakat</p>
                                 <div class="readmore_bt"><a href="#">Read More</a></div>
