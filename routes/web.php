@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +25,15 @@ Route::prefix('laporan')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
         Route::get('create', 'create');
     });
+});
+
+Route::get('user', function () {
+    $user = Auth::user();
+    $userId = $user->id;
+    return ['roles' => $user->getRoleNames(), 'permissions' => $user->getPermissionsViaRoles()];
+    return response()->json([
+        'result' => User::with('data_user')->where('id', $userId)->first(),
+    ]);
 });
 
 Route::get('/dashboard', function () {
