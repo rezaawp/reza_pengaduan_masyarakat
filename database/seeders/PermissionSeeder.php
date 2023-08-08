@@ -2,11 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\DataUser;
+use App\Models\Masyarakat;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Psy\Readline\Hoa\Console;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PermissionSeeder extends Seeder
 {
@@ -28,7 +32,7 @@ class PermissionSeeder extends Seeder
         $role1 = Role::create(['name' => 'admin']);
         $role1->givePermissionTo('verifikasi dan validasi');
         $role1->givePermissionTo('memberikan tanggapan');
-        $role1->givePermissionTo('menulis laporan pengaduan');
+        $role1->givePermissionTo('generate laporan');
 
         $role2 = Role::create(['name' => 'petugas']);
         $role2->givePermissionTo('verifikasi dan validasi');
@@ -54,8 +58,26 @@ class PermissionSeeder extends Seeder
         $user->assignRole($role2);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example Super-Admin User',
+            'name' => 'Masyarakat User',
             'email' => 'masyarakat@example.com',
+        ]);
+
+
+        $masy = new Masyarakat();
+
+        $masyarakat = Masyarakat::create([
+            'nik' => '1234567890123456',
+            'nama' => 'Reza Khoirul Wijaya Putra',
+            'username' => 'rezawp',
+            'telp' => '081512341234'
+        ]);
+
+        $masyarakatId = $masyarakat->id;
+
+        DataUser::create([
+            'from_table' => $masy->getTable(),
+            'identity_id' => $masyarakatId,
+            'user_id' => $user->id
         ]);
 
         $user->assignRole($role3);

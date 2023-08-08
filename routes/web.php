@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('user.index');
+});
+
+Route::prefix('laporan')->group(function () {
+    Route::controller(LaporanController::class)->group(function () {
+        Route::get('create', 'create');
+    });
 });
 
 Route::get('/dashboard', function () {
