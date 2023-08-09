@@ -127,8 +127,11 @@
         import {
             TextareaAutoSize
         } from 'https://cdnjs.cloudflare.com/ajax/libs/textarea-autosize/1.0.0/textarea-autosize.min.js'
-        const wrapper = new TextareaAutoSize(
+        new TextareaAutoSize(
             document.querySelector('textarea.js-auto-size')
+        )
+        new TextareaAutoSize(
+            document.querySelector('textarea.js-auto-size2')
         )
     </script>
 
