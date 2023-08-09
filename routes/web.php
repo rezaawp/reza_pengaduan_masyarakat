@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::prefix('laporan')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
+        Route::get('/', 'index');
         Route::get('create', 'create')->name('laporan.create')->middleware(['auth', 'masyarakat']);
     });
 });

@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
-            PermissionSeeder::class
+            PermissionSeeder::class,
+            PengaduanSeeder::class,
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -23,5 +24,3 @@ class DatabaseSeeder extends Seeder
         // ]);
     }
 }
-
-

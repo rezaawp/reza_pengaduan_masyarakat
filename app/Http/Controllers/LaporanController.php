@@ -40,4 +40,9 @@ class LaporanController extends Controller
             dd($photo);
         }
     }
+
+    function index()
+    {
+        return view('laporan.index');
+    }
 }
