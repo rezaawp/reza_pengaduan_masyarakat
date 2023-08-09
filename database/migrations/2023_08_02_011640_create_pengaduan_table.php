@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('nik', 16);
             $table->foreign('nik')->references('nik')->on('masyarakat');
             $table->text('isi_laporan');
+            $table->text('lokasi_pengaduan');
             $table->string('foto', 255);
             $table->enum('status', ['0', 'proses', 'selesai']);
             $table->timestamps();
