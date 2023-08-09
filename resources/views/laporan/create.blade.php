@@ -1,7 +1,6 @@
 <x-guest-layout>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
-        < script defer src = "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" >
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <div class="container pt-4">
         <div class="d-flex justify-content-center">
