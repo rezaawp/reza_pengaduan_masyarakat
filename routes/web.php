@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Route::prefix('laporan')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
-        Route::get('create', 'create');
+        Route::get('create', 'create')->name('laporan.create')->middleware(['auth', 'masyarakat']);
     });
 });
 
@@ -47,3 +47,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/proses.php';

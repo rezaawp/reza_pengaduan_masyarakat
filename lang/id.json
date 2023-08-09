@@ -24,5 +24,14 @@
     "Enter email": "Masukan email",
     "Make a report": "Buat Laporan",
     "Log out": "Keluar",
-    "REPORT AS A SOCIETY": "LAPOR SEBAGAI MASYARAKAT"
+    "REPORT AS A SOCIETY": "LAPOR SEBAGAI MASYARAKAT",
+    "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "Setelah akun Anda dihapus, semua sumber daya dan datanya akan dihapus secara permanen. Sebelum menghapus akun Anda, harap unduh data atau informasi apa pun yang ingin Anda pertahankan.",
+    "Delete Account": "Hapus Akun",
+    "New Password": "Password Baru",
+    "Current Password": "Password Saat Ini",
+    "Update Password": "Ganti Password",
+    "Ensure your account is using a long, random password to stay secure.": "Pastikan akun Anda menggunakan kata sandi acak yang panjang agar tetap aman.",
+    "Profile Information": "Informasi Profile",
+    "Update your account's profile information and email address.": "Perbarui informasi profil akun dan alamat email Anda.",
+    "Log Out": "Keluar"
 }

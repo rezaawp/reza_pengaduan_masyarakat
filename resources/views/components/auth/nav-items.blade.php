@@ -1,7 +1,7 @@
 @if (auth()->user() &&
         auth()->user()->can('menulis laporan pengaduan'))
     <li class="nav-item"><a href="index.html">
-        </a><a class="nav-link" href="{{ route('register') }}">{{ __('Make a report') }}</a>
+        </a><a class="nav-link" href="{{ route('laporan.create') }}">{{ __('Make a report') }}</a>
     </li>
     <li class="nav-item"><a href="index.html">
         </a>
