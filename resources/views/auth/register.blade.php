@@ -70,6 +70,22 @@
                             value="{{ old('name') }}" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('NIK') }}</label><input id="name" name="nik"
+                            type="text" class="form-control" placeholder="{{ __('NIK') }}"
+                            value="{{ old('nik') }}" />
+                        <x-input-error :messages="$errors->get('nik')" class="mt-2" />
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('No. Telp') }}</label><input id="name" name="no_telp"
+                            type="text" class="form-control" placeholder="{{ __('No. Telp') }}"
+                            value="{{ old('no_telp') }}" />
+                        <x-input-error :messages="$errors->get('no_telp')" class="mt-2" />
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">{{ __('Email') }}</label><input id="email" name="email"
                             type="email" class="form-control" placeholder="{{ __('Enter email') }}"
