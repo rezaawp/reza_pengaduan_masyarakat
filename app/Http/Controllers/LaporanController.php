@@ -19,7 +19,9 @@ class LaporanController extends Controller
 
         $data = $request->validate([
             'isi_laporan' => ['required', 'string', 'min:10'],
-            'foto_bukti' => ['required']
+            'foto_bukti' => ['required'],
+            'detail_alamat' => ['required', 'min:5'],
+            'subject' => ['required', 'min:5']
         ]);
 
         $photos = $request->file('foto_bukti');
@@ -33,11 +35,12 @@ class LaporanController extends Controller
             $extension = $photo->getClientOriginalExtension();
             $check = in_array($extension, $allowedfileExtension);
             if ($check) {
+                $waktuSaatIni = time();
+                $photo->move('storage', "{$waktuSaatIni}.{$extension}");
                 $photoValidasi[$filename] = true;
             } else {
                 $photoValidasi[$filename] = false;
             }
-            dd($photo);
         }
     }
 

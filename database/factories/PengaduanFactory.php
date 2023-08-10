@@ -18,6 +18,7 @@ class PengaduanFactory extends Factory
     public function definition(): array
     {
         return [
+            'subject' => fake()->text(10),
             'tgl_pengaduan' => fake()->date(),
             'nik' => Masyarakat::all()->random()->nik,
             'isi_laporan' => fake()->realTextBetween(11, 200),
