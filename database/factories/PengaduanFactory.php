@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Image;
 use App\Models\Masyarakat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class PengaduanFactory extends Factory
     public function definition(): array
     {
         return [
+            'image_id' => Image::all()->random()->id,
             'subject' => fake()->text(10),
             'tgl_pengaduan' => fake()->date(),
             'nik' => Masyarakat::all()->random()->nik,
