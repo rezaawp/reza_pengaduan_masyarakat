@@ -54,9 +54,9 @@ class LaporanController extends Controller
             'images' => json_encode($images)
         ]);
 
-        Pengaduan::create([
-        
-        ])
+        // Pengaduan::create([
+
+        // ])
     }
 
     function index()
