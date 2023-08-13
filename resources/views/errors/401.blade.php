@@ -1,5 +1,5 @@
-@extends('errors::minimal')
-
-@section('title', __('Unauthorized'))
-@section('code', '401')
-@section('message', __('Unauthorized'))
+@include('layouts.errorpage', [
+    'code' => 401,
+    'message' => __('Unauthorized'),
+    'message1' => __('Sorry, you need to login'),
+])

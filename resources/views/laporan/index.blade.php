@@ -2,7 +2,12 @@
 
     <x-navbar />
 
-    <div class="container">
+    <div class="container pt-4">
+
+        <div class="d-flex justify-content-center">
+            <h2>{{ __('LAPORAN SAYA') }}</h2>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-vcenter">
                 <thead>
@@ -17,71 +22,19 @@
                 <tbody>
                     <tr>
                         <td>Paweł Kuna</td>
-                        <td class="text-secondary">
+                        <td>
                             UI Designer, Training
                         </td>
-                        <td class="text-secondary"><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
+                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
                         </td>
-                        <td class="text-secondary">
+                        <td>
                             User
                         </td>
                         <td>
                             <a href="#">Edit</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Jeffie Lewzey</td>
-                        <td class="text-secondary">
-                            Chemical Engineer, Support
-                        </td>
-                        <td class="text-secondary"><a href="#" class="text-reset">jlewzey1@seesaa.net</a></td>
-                        <td class="text-secondary">
-                            Admin
-                        </td>
-                        <td>
-                            <a href="#">Edit</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mallory Hulme</td>
-                        <td class="text-secondary">
-                            Geologist IV, Support
-                        </td>
-                        <td class="text-secondary"><a href="#" class="text-reset">mhulme2@domainmarket.com</a>
-                        </td>
-                        <td class="text-secondary">
-                            User
-                        </td>
-                        <td>
-                            <a href="#">Edit</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Dunn Slane</td>
-                        <td class="text-secondary">
-                            Research Nurse, Sales
-                        </td>
-                        <td class="text-secondary"><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                        <td class="text-secondary">
-                            Owner
-                        </td>
-                        <td>
-                            <a href="#">Edit</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Emmy Levet</td>
-                        <td class="text-secondary">
-                            VP Product Management, Accounting
-                        </td>
-                        <td class="text-secondary"><a href="#" class="text-reset">elevet4@senate.gov</a></td>
-                        <td class="text-secondary">
-                            Admin
-                        </td>
-                        <td>
-                            <a href="#">Edit</a>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>

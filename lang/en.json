@@ -9,5 +9,9 @@
     "Detail Alamat": "Address",
     "Kami membutuhkan alamat untuk memperbaiki layanan kami": "We need addresses to improve our service",
     "No. Telp": "Phone Number",
-    "NIK": "ID Number"
+    "NIK": "ID Number",
+    "LAPORAN SAYA": "MY REPORT",
+    "Kami mohon maaf atas ketidaknyamanan ini. Kami akan segera memperbaiki": "We apologize for this inconvenience. We will fix soon",
+    "Kami mohon maaf atas ketidaknyamanan ini. Kami akan segera memperbarui layanan ini": "We apologize for this inconvenience. We will update this service soon",
+    "Mohon maaf, terlalu banyak permintaan. Silahkan coba lagi nanti": "Sorry, too many requests. Please try again later"
 }

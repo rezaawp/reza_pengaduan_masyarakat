@@ -17,7 +17,10 @@
         )
     </script>
 
+    <x-navbar />
+
     <div class="container pt-4">
+
         <div class="d-flex justify-content-center">
             <h2>{{ __('LAPOR SEBAGAI MASYARAKAT') }}</h2>
         </div>

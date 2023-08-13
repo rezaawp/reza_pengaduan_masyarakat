@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    abort(429);
     return view('user.index');
-});
+})->name('user.home');
 
 Route::prefix('laporan')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
         Route::middleware(['auth', 'masyarakat'])->group(function () {
             Route::get('/create', 'create')->name('laporan.create');
-            Route::get('/me', 'index');
+            Route::get('/me', 'index')->name('laporan.index');
         });
     });
 });
