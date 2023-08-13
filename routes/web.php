@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    abort(429);
     return view('user.index');
 })->name('user.home');
 
