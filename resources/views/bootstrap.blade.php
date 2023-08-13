@@ -14,7 +14,9 @@
 </head>
 
 <body>
-    @yield('body')
+    <x-guest-layout>
+        @yield('body')
+    </x-guest-layout>
     <script src="" {{ asset('dist/js/tabler.min.js') }}></script>
     <script src="" {{ asset('dist/js/demo.min.js') }}></script>
 </body>

@@ -23,8 +23,10 @@ Route::get('/', function () {
 
 Route::prefix('laporan')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('create', 'create')->name('laporan.create')->middleware(['auth', 'masyarakat']);
+        Route::middleware(['auth', 'masyarakat'])->group(function () {
+            Route::get('/create', 'create')->name('laporan.create');
+            Route::get('/me', 'index');
+        });
     });
 });
 
@@ -39,7 +41,7 @@ Route::get('user', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'admin_or_petugas'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

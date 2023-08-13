@@ -21,6 +21,21 @@
         <div class="d-flex justify-content-center">
             <h2>{{ __('LAPOR SEBAGAI MASYARAKAT') }}</h2>
         </div>
+
+        <x-session-layout key='message'>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-title">Success</h4>
+                <div class="text-secondary"><x-get-session key='message' /></div>
+            </div>
+        </x-session-layout>
+
+        <x-session-layout key='error'>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-title">Error</h4>
+                <div class="text-secondary"><x-get-session key='error' /></div>
+            </div>
+        </x-session-layout>
+
         <form class="card" method="POST" action="{{ route('proses.laporan.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="card-header">
@@ -38,8 +53,8 @@
                 <div class="mb-3">
                     <label class="form-label required">{{ __('Isi Laporan') }}</label>
                     <div>
-                        <textarea type="text" name="isi_laporan" class="form-control js-auto-size"
-                            aria-describedby="emailHelp" placeholder="{{ __('Isi Laporan') }}">{{ old('isi_laporan') }}</textarea>
+                        <textarea type="text" name="isi_laporan" class="form-control js-auto-size" aria-describedby="emailHelp"
+                            placeholder="{{ __('Isi Laporan') }}">{{ old('isi_laporan') }}</textarea>
                         <x-input-error :messages="$errors->get('isi_laporan')" class="mt-2" />
                         <small class="form-hint">{{ __('Laporan akan diterima oleh petugas') }}</small>
                     </div>

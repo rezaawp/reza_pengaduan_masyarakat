@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminOrPetugasMiddleware;
 use App\Http\Middleware\MasyarakatMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -54,6 +55,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'admin_or_petugas' => AdminOrPetugasMiddleware::class,
         'masyarakat' => MasyarakatMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
