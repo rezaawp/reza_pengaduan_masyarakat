@@ -1,5 +1,6 @@
 @php
     use Illuminate\Support\Carbon;
+    // https://livewire.laravel.com/docs/volt
 @endphp
 
 <x-guest-layout>
@@ -8,7 +9,13 @@
 
     <div class="container pt-4">
         <div class="d-flex justify-content-center">
-            <h2 class="text-center">{{ __('LAPORAN SAYA') }}</h2>
+            <x-role role="masyarakat">
+                <h2 class="text-center">{{ __('LAPORAN SAYA') }}</h2>
+            </x-role>
+
+            <x-role role="admin|petugas">
+                <h2 class="text-center">{{__('LAPORAN MASYARAKAT')}}</h2>
+            </x-role>
         </div>
 
         <div class="table-responsive">
@@ -17,7 +24,6 @@
                     <tr>
                         <th class="text-center" style="width: 1%"></th>
                         <th></th>
-                        {{-- <th>Detail</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -27,11 +33,14 @@
                             $item = $pengaduan[$i];
                         @endphp
                         <tr>
-                            <td class="text-center">1</td>
+                            <td class="text-center">{{$i + 1}}</td>
                             <td>
+                                {{-- Subject --}}
                                 <p class="strong mb-1">{{ $item['subject'] }}<span
                                         class="badge {{ $item['status'] === '0' ? 'bg-red' : ($item['status'] === 'proses' ? 'bg-yellow' : 'bg-green') }} ms-2">{{ $item['status'] === '0' ? 'Ditolak' : Str::title($item['status']) }}</span>
                                 </p>
+
+                                {{-- Preview isi laporan --}}
                                 <div class="text-socondary">
                                     {{ Str::limit($item['isi_laporan'], 50, '...') }}<span data-bs-toggle="collapse"
                                         data-bs-target="#{{ 'col-' . $i }}">
@@ -46,6 +55,13 @@
                                             <path d="M4 4l16 0"></path>
                                         </svg></span></div>
 
+                                {{-- From --}}
+
+                                <x-role role="admin|petugas">
+                                    <div>
+                                        <span>{{__('Dari')}} : {{$item['masyarakat']['user']['name']}} </span>
+                                    </div>
+                                </x-role>
                                 <div class="collapse navbar-collapse" id="{{ 'col-' . $i }}">
                                     <div class="mt-3">
                                         <table>
@@ -64,7 +80,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px !important" class="align-top"><span>{{__('Isi laporan')}}</span></td>
+                                                <td style="width: 100px !important" class="align-top">
+                                                    <span>{{ __('Isi laporan') }}</span>
+                                                </td>
                                                 <td class="align-top">: </td>
                                                 <td>
                                                     <p align="justify">{{ $item['isi_laporan'] }}</p>
@@ -73,7 +91,7 @@
 
                                             <tr>
                                                 <td style="width: 100px !important" class="align-top">
-                                                    <span>{{__('Images')}}</span>
+                                                    <span>{{ __('Images') }}</span>
                                                 </td>
                                                 <td class="align-top">: </td>
                                                 <td>

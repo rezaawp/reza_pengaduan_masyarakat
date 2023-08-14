@@ -16,4 +16,8 @@ class Pengaduan extends Model
     function images() {
         return $this->belongsTo(Image::class, 'image_id', 'id');
     }
+
+    function masyarakat() {
+        return $this->belongsTo(Masyarakat::class, 'nik', 'nik');
+    }
 }

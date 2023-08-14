@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
@@ -39,9 +40,14 @@ Route::get('user', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'admin_or_petugas'])->name('dashboard');
+Route::prefix('/admin')->group(function () {
+    Route::controller(AdminLaporanController::class)->group(function() {
+        Route::get('/laporan', 'index')->name('admin.laporan.index');
+    });
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->middleware(['auth', 'verified', 'admin_or_petugas'])->name('admin.dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

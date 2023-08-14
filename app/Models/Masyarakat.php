@@ -16,4 +16,8 @@ class Masyarakat extends Model
     {
         return $this->hasMany(Pengaduan::class, 'nik', 'nik');
     }
+
+    function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

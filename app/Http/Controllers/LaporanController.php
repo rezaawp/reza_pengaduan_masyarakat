@@ -97,14 +97,6 @@ class LaporanController extends Controller
 
     function index()
     {
-        $tanggal = '2023-08-09'; // Tanggal yang ingin diubah formatnya
-        $tanggalCarbon = Carbon::parse($tanggal);
-
-        // Membuat format tanggal yang diinginkan
-        $formatTanggal = $tanggalCarbon->translatedFormat('l, j F Y');
-
-        // return $formatTanggal; // Output: Kamis, 9 Agustus 2023
-
         $user = Auth::user()->load(['masyarakat.pengaduan.images']);
         $masyarakat =  $user['masyarakat'];
         $pengaduan = $masyarakat['pengaduan'];

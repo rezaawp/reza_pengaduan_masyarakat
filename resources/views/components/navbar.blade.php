@@ -1,3 +1,22 @@
+@php
+    $role = auth()
+        ->user()
+        ->getRoleNames()
+        ->toArray();
+    // dd($role);
+    $isAdmin = false;
+    $isMasyarkat = false;
+    $isPetugas = false;
+
+    if (in_array('admin', $role)) {
+        $isAdmin = true;
+    } elseif (in_array('petugas', $role)) {
+        $isPetugas = true;
+    } elseif (in_array('masyarakat', $role)) {
+        $isMasyarkat = true;
+    }
+@endphp
+
 <style>
     .light {
         background-color: #fafbfc
@@ -12,17 +31,28 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
+
             <ul class="navbar-nav">
+                @if ($isMasyarkat)
+                    <li class="nav-item ">
+                        <a class="nav-link {{ url()->full() == route('laporan.create') ? 'active' : '' }}"
+                            href="{{ route('laporan.create') }}">{{ __('Create Report') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ url()->full() == route('laporan.index') ? 'active' : '' }}"
+                            href="{{ route('laporan.index') }}">{{ __('My Report') }}</a>
+                    </li>
+                @elseif ($isAdmin)
+                    <li class="nav-item ">
+                        <a class="nav-link {{ url()->full() == route('admin.dashboard') ? 'active' : '' }}"
+                            href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a>
+                    </li>
 
-                <li class="nav-item ">
-                    <a class="nav-link {{ url()->full() == route('laporan.create') ? 'active' : '' }}"
-                        href="{{ route('laporan.create') }}">{{ __('Create Report') }}</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ url()->full() == route('laporan.index') ? 'active' : '' }}"
-                        href="{{ route('laporan.index') }}">{{ __('My Report') }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ url()->full() == route('admin.laporan.index') ? 'active' : '' }}"
+                            href="{{ route('admin.laporan.index') }}">{{ __('Society Reports') }}</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
