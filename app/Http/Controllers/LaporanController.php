@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Models\Masyarakat;
 use App\Models\Pengaduan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +17,15 @@ use Throwable;
 class LaporanController extends Controller
 {
     //
+    private $user;
+    private $masyarakat;
+
+    function __construct()
+    {
+        // $this->user = Auth::user();
+        // $this->masyarakat = $this->user->load(['masyarakat'])['masyarakat'];
+    }
+
     function create()
     {
         return view('laporan.create');
@@ -48,7 +59,7 @@ class LaporanController extends Controller
                     $namaFile = "{$waktuSaatIni}.{$extension}";
                     $moving = $photo->move('storage/images', $namaFile);
 
-                    array_push($images, "{$request->getHttpHost()}/{$moving->getPathname()}");
+                    array_push($images, "{$request->root()}/{$moving->getPathname()}");
                     $photoValidasi[$filename] = true;
                 } else {
                     $photoValidasi[$filename] = false;
@@ -59,10 +70,10 @@ class LaporanController extends Controller
                 'images' => json_encode($images)
             ]);
 
+            $user = Auth::user()->load(['masyarakat']);
 
-            $nik = Masyarakat::where('user_id', Auth::user()->id)->first();
-
-            $nik = $nik['nik'];
+            // DB::rollBack();
+            $nik = $user['masyarakat']['nik'];
 
             $insertPengaduan = Pengaduan::create([
                 'tgl_pengaduan' => date('Y-m-d'),
@@ -70,7 +81,8 @@ class LaporanController extends Controller
                 'subject' => $input['subject'],
                 'isi_laporan' => $input['isi_laporan'],
                 'lokasi_pengaduan' => $input['detail_alamat'],
-                'image_id' => $dataImage['id']
+                'image_id' => $dataImage['id'],
+                'status' => 'proses'
             ]);
 
             DB::commit();
@@ -85,6 +97,18 @@ class LaporanController extends Controller
 
     function index()
     {
-        return view('laporan.index');
+        $tanggal = '2023-08-09'; // Tanggal yang ingin diubah formatnya
+        $tanggalCarbon = Carbon::parse($tanggal);
+
+        // Membuat format tanggal yang diinginkan
+        $formatTanggal = $tanggalCarbon->translatedFormat('l, j F Y');
+
+        // return $formatTanggal; // Output: Kamis, 9 Agustus 2023
+
+        $user = Auth::user()->load(['masyarakat.pengaduan.images']);
+        $masyarakat =  $user['masyarakat'];
+        $pengaduan = $masyarakat['pengaduan'];
+
+        return view('laporan.index', compact(['pengaduan']));
     }
 }

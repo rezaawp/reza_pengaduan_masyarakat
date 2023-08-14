@@ -1,9 +1,12 @@
+@php
+    use Illuminate\Support\Carbon;
+@endphp
+
 <x-guest-layout>
 
     <x-navbar />
 
     <div class="container pt-4">
-
         <div class="d-flex justify-content-center">
             <h2 class="text-center">{{ __('LAPORAN SAYA') }}</h2>
         </div>
@@ -19,14 +22,19 @@
                 </thead>
                 <tbody>
 
-                    @for ($i = 0; $i < 10; $i++)
+                    @for ($i = 0; $i < count($pengaduan); $i++)
+                        @php
+                            $item = $pengaduan[$i];
+                        @endphp
                         <tr>
                             <td class="text-center">1</td>
                             <td>
-                                <p class="strong mb-1">Logo Creation <span class="badge bg-yellow">Yellow</span></p>
+                                <p class="strong mb-1">{{ $item['subject'] }}<span
+                                        class="badge {{ $item['status'] === '0' ? 'bg-red' : ($item['status'] === 'proses' ? 'bg-yellow' : 'bg-green') }} ms-2">{{ $item['status'] === '0' ? 'Ditolak' : Str::title($item['status']) }}</span>
+                                </p>
                                 <div class="text-socondary">
-                                    {{ Str::limit('Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, est odio exercitationem quidem quae rerum tenetur non fuga, qui earum deleniti velit eaque dicta at veniam impedit quia tempora dolore.', 50, '...') }}<span
-                                        data-bs-toggle="collapse" data-bs-target="#{{ "col-" . $i }}">
+                                    {{ Str::limit($item['isi_laporan'], 50, '...') }}<span data-bs-toggle="collapse"
+                                        data-bs-target="#{{ 'col-' . $i }}">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             class="icon icon-tabler icon-tabler-arrow-bar-down" width="25"
                                             height="25" viewBox="0 0 25 25" stroke-width="2" stroke="currentColor"
@@ -38,48 +46,45 @@
                                             <path d="M4 4l16 0"></path>
                                         </svg></span></div>
 
-                                <div class="collapse navbar-collapse" id="{{ "col-" . $i }}">
+                                <div class="collapse navbar-collapse" id="{{ 'col-' . $i }}">
                                     <div class="mt-3">
                                         <table>
                                             <tr>
-                                                <td style="width: 100px !important" class="align-top">Dibuat</td>
+                                                <td style="width: 100px !important" class="align-top">
+                                                    {{ __('Dibuat') }}</td>
                                                 <td class="align-top">: </td>
-                                                <td>Kamis, 9 Agustus 2023</td>
+                                                <td>{{ Carbon::parse($item['tgl_pengaduan'])->translatedFormat('l, j F Y') }}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px !important" class="align-top"><span>Isi
-                                                        Laporan</span></td>
+                                                <td style="width: 100px !important" class="align-top">
+                                                    {{ __('Lokasi') }}</td>
+                                                <td class="align-top">: </td>
+                                                <td>{{ $item['lokasi_pengaduan'] }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 100px !important" class="align-top"><span>{{__('Isi laporan')}}</span></td>
                                                 <td class="align-top">: </td>
                                                 <td>
-                                                    <p align="justify">Lorem ipsum dolor sit, amet consectetur
-                                                        adipisicing
-                                                        elit. Omnis
-                                                        architecto, quasi fuga vitae reiciendis, est et eveniet
-                                                        praesentium
-                                                        delectus sequi vel! Molestiae adipisci ipsa facere cumque
-                                                        mollitia
-                                                        inventore. Dolorem, repudiandae!</p>
+                                                    <p align="justify">{{ $item['isi_laporan'] }}</p>
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                 <td style="width: 100px !important" class="align-top">
-                                                    <span>Images</span>
+                                                    <span>{{__('Images')}}</span>
                                                 </td>
                                                 <td class="align-top">: </td>
                                                 <td>
                                                     <div>
                                                         <div class="row">
-                                                            <div class="col-6 col-md-3 col-sm-6">
-                                                                <img width="200"
-                                                                    src="https://w7.pngwing.com/pngs/151/483/png-transparent-brown-tabby-cat-cat-dog-kitten-pet-sitting-the-waving-cat-animals-cat-like-mammal-pet-thumbnail.png"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="col-6 col-md-3 col-sm-6">
-                                                                <img width="200"
-                                                                    src="https://w7.pngwing.com/pngs/151/483/png-transparent-brown-tabby-cat-cat-dog-kitten-pet-sitting-the-waving-cat-animals-cat-like-mammal-pet-thumbnail.png"
-                                                                    alt="">
-                                                            </div>
+                                                            @foreach (json_decode($item['images']['images']) as $image)
+                                                                <div class="col-6 col-md-3 col-sm-6">
+                                                                    <img width="200" src="{{ $image }}"
+                                                                        alt="">
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </td>

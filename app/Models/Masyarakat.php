@@ -11,4 +11,9 @@ class Masyarakat extends Model
 
     protected $table = 'masyarakat';
     protected $guarded = ['id'];
+
+    function pengaduan()
+    {
+        return $this->hasMany(Pengaduan::class, 'nik', 'nik');
+    }
 }

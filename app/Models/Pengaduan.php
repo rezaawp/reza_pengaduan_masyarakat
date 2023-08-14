@@ -12,4 +12,8 @@ class Pengaduan extends Model
     protected $guarded = ['id'];
     protected $table = 'pengaduan';
     protected $primaryKey = 'id_pengaduan';
+
+    function images() {
+        return $this->belongsTo(Image::class, 'image_id', 'id');
+    }
 }

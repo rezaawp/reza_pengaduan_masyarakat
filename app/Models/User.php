@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(DataUser::class, 'user_id', 'id');
     }
+
+    function masyarakat()
+    {
+        return $this->hasOne(Masyarakat::class, 'user_id', 'id');
+    }
 }
