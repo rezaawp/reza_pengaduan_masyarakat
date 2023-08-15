@@ -17,6 +17,5 @@ class LaporanController extends Controller
         $pengaduan = Pengaduan::with(['images', 'masyarakat.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
         return view('laporan.index', compact(['pengaduan']));
     }
-    
-    // function
+
 }

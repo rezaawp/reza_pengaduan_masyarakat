@@ -15,7 +15,6 @@ class TanggapanController extends Controller
     //
     function store(Request $request)
     {
-        // return $request->all();
         $user = Auth::user()->load(['petugas']);
         $isTerima = $request->terima;
         $isTolak = $request->tolak;
@@ -40,9 +39,6 @@ class TanggapanController extends Controller
         if ($validasi->fails()) {
             return redirect()->back()->withErrors($validasi->errors())->withInput($request->all());
         }
-
-        // return $data;
-
 
         $insertTanggapan = Tanggapan::create([
             'id_pengaduan' => $data['id_pengaduan'],
