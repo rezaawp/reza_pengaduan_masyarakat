@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Masyarakat;
 use App\Models\Pengaduan;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -97,9 +98,18 @@ class LaporanController extends Controller
 
     function index()
     {
-        $user = Auth::user()->load(['masyarakat.pengaduan.images']);
-        $masyarakat =  $user['masyarakat'];
-        $pengaduan = $masyarakat['pengaduan'];
+        $user = Auth::user()->load(['masyarakat']);
+        $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with('images')->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
+        // return $pengaduan;
+
+
+        //     $user = Auth::user()->load(['masyarakat.pengaduan.images', 'masyarakat.pengaduan' => function ($q) {
+        //         dd($q->orderBy('id_pengaduan')->cursorPaginate(10)->nextPageUrl());
+        //     }]);
+
+        // return dd($user->masyarakat->pengaduan->nextCursor());
+        // $masyarakat =  $user['masyarakat'];
+        // $pengaduan = $masyarakat['pengaduan'];
 
         return view('laporan.index', compact(['pengaduan']));
     }

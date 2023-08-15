@@ -3,19 +3,38 @@
     // https://livewire.laravel.com/docs/volt
 @endphp
 
+@php
+    $role = auth()
+        ->user()
+        ->getRoleNames()
+        ->toArray();
+    // dd($role);
+    $isAdmin = false;
+    $isMasyarkat = false;
+    $isPetugas = false;
+
+    if (in_array('admin', $role)) {
+        $isAdmin = true;
+    } elseif (in_array('petugas', $role)) {
+        $isPetugas = true;
+    } elseif (in_array('masyarakat', $role)) {
+        $isMasyarkat = true;
+    }
+@endphp
+
 <x-guest-layout>
 
     <x-navbar />
 
     <div class="container pt-4">
         <div class="d-flex justify-content-center">
-            <x-role role="masyarakat">
+            @role('masyarakat')
                 <h2 class="text-center">{{ __('LAPORAN SAYA') }}</h2>
-            </x-role>
+            @endrole
 
-            <x-role role="admin|petugas">
-                <h2 class="text-center">{{__('LAPORAN MASYARAKAT')}}</h2>
-            </x-role>
+            @role(['admin', 'petugas'])
+                <h2 class="text-center">{{ __('LAPORAN MASYARAKAT') }}</h2>
+            @endrole
         </div>
 
         <div class="table-responsive">
@@ -33,7 +52,7 @@
                             $item = $pengaduan[$i];
                         @endphp
                         <tr>
-                            <td class="text-center">{{$i + 1}}</td>
+                            <td class="text-center">{{ $i + 1 }}</td>
                             <td>
                                 {{-- Subject --}}
                                 <p class="strong mb-1">{{ $item['subject'] }}<span
@@ -57,12 +76,28 @@
 
                                 {{-- From --}}
 
-                                <x-role role="admin|petugas">
+                                @role(['admin', 'petugas'])
                                     <div>
-                                        <span>{{__('Dari')}} : {{$item['masyarakat']['user']['name']}} </span>
+                                        <span>{{ __('Dari') }} : {{ $item['masyarakat']['user']['name'] }} </span>
                                     </div>
-                                </x-role>
+                                @endrole
                                 <div class="collapse navbar-collapse" id="{{ 'col-' . $i }}">
+                                    @role(['admin', 'petugas'])
+                                        <button class="mt-2 btn btn-sm btn-primary"data-bs-toggle="collapse"
+                                            data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
+                                        <div class="collapse navbar-collapse" id="{{ 'tanggapan-' . $i }}">
+                                            <form action="{{ route('prsoes.tanggapan.store') }}" method="POST">
+                                                @csrf
+                                                <textarea class="mt-2 form-control" name="{{ 'tanggapan-' . $item['id_pengaduan'] }}" id=""></textarea>
+
+                                                <div class="d-flex justify-content-end gap-2 pt-2">
+                                                    <small class="text-secondary">Input diatas bisa diperbesar</small>
+                                                    <button class="btn btn-sm btn-success" name="terima" value="{{$item['tgl_pengaduan']}}">Terima & Kirim</button>
+                                                    <button class="btn btn-sm btn-danger" name="tolak" value="{{$item['tgl_pengaduan']}}">Tolak & Kirim</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endrole
                                     <div class="mt-3">
                                         <table>
                                             <tr>
@@ -108,16 +143,21 @@
                                                 </td>
                                             </tr>
                                         </table>
+
                                     </div>
                                 </div>
                             </td>
-                            {{-- <td></td> --}}
                         </tr>
                     @endfor
+                    <div class="d-flex justify-content-end">
+                        {{ $pengaduan->links() }}
+                    </div>
 
                 </tbody>
             </table>
         </div>
+
+
     </div>
 
 </x-guest-layout>

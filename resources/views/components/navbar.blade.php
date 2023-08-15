@@ -44,8 +44,8 @@
                     </li>
                 @elseif ($isAdmin)
                     <li class="nav-item ">
-                        <a class="nav-link {{ url()->full() == route('admin.dashboard') ? 'active' : '' }}"
-                            href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a>
+                        <a class="nav-link {{ url()->full() == route('dashboard') ? 'active' : '' }}"
+                            href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                     </li>
 
                     <li class="nav-item">

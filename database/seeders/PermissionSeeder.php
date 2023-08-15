@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DataUser;
 use App\Models\Masyarakat;
+use App\Models\Petugas;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Psy\Readline\Hoa\Console;
@@ -48,11 +49,23 @@ class PermissionSeeder extends Seeder
             'email' => 'admin@example.com',
         ]);
 
+        Petugas::create([
+            'telp' => '08571231231',
+            'level' => 'admin',
+            'user_id' => $user->id
+        ]);
+
         $user->assignRole($role1);
 
         $user = \App\Models\User::factory()->create([
             'name' => 'Petugas User',
             'email' => 'petugas@example.com',
+        ]);
+
+        Petugas::create([
+            'telp' => '08571231231',
+            'level' => 'petugas',
+            'user_id' => $user->id
         ]);
 
         $user->assignRole($role2);

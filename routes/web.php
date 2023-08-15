@@ -33,8 +33,8 @@ Route::prefix('laporan')->group(function () {
 
 Route::get('user', function () {
     $user = Auth::user();
-    $userId = $user->id;
-    return ['roles' => $user->getRoleNames(), 'permissions' => $user->getPermissionsViaRoles()];
+    // $userId = $user->id;
+    // return ['roles' => $user->getRoleNames(), 'permissions' => $user->getPermissionsViaRoles()];
     return response()->json([
         'result' => User::with('data_user')->where('id', $userId)->first(),
     ]);
@@ -42,11 +42,11 @@ Route::get('user', function () {
 
 Route::prefix('/admin')->group(function () {
     Route::controller(AdminLaporanController::class)->group(function() {
-        Route::get('/laporan', 'index')->name('admin.laporan.index');
+        Route::get('/laporan', 'index')->name('admin.laporan.index')->middleware(['auth', 'admin_or_petugas']);
     });
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
-    })->middleware(['auth', 'verified', 'admin_or_petugas'])->name('admin.dashboard');
+    })->middleware(['auth', 'verified', 'admin_or_petugas'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
