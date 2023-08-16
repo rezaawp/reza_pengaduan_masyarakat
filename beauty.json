@@ -1,0 +1,22 @@
+{
+    "id_pengaduan": 35,
+    "tgl_pengaduan": "1974-03-30",
+    "nik": "1234567890123456",
+    "subject": "Fugit vel.",
+    "isi_laporan": "And I declare it's too bad, that it had struck her foot! She was a long way. So she set the little golden key, and when she was quite surprised to find that her flamingo was gone in a wondering.",
+    "lokasi_pengaduan": "Assumenda omnis fugit et ducimus itaque et deserunt ut. Ea recusandae velit omnis itaque. Tenetur quo commodi numquam aut id dolor. Facilis iusto nostrum dolore sed.",
+    "foto": "Sint.",
+    "status": "proses",
+    "created_at": "2023-08-14T10:49:01.000000Z",
+    "updated_at": "2023-08-15T01:52:51.000000Z",
+    "image_id": 10,
+    "tanggapan": {
+        "id_tanggapan": 3,
+        "id_pengaduan": 35,
+        "tgl_pengaduan": "1974-03-30",
+        "tanggapan": "Ini adalah tanggapan pertama",
+        "id_petugas": 1,
+        "created_at": "2023-08-15T01:56:47.000000Z",
+        "updated_at": "2023-08-15T01:56:47.000000Z"
+    }
+}

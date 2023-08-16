@@ -15,14 +15,14 @@ class TanggapanController extends Controller
     //
     function store(Request $request)
     {
-        // return $request->all();
         $user = Auth::user()->load(['petugas']);
-        $isTerima = $request->terima;
-        $isTolak = $request->tolak;
+        $isTerima = $request->terima ? $request->terima : false;
+        $isTolak = $request->tolak ? $request->tolak : false;
 
         $data = $request->all();
+
         foreach ($request->all() as $key => $value) {
-            $split = explode("-", $key);
+            $split = $isTerima || $isTolak ? explode("-", $key) : null;
             if (count($split) > 1) {
                 $data['id_pengaduan'] = (int)$split[1];
                 $data['isi_tanggapan'] = $value;

@@ -33,15 +33,32 @@ Route::prefix('laporan')->group(function () {
 
 Route::get('user', function () {
     $user = Auth::user();
-    // $userId = $user->id;
-    // return ['roles' => $user->getRoleNames(), 'permissions' => $user->getPermissionsViaRoles()];
+    $userId = $user->id;
+    return ['roles' => $user->getRoleNames(), 'permissions' => $user->getPermissionsViaRoles()];
     return response()->json([
         'result' => User::with('data_user')->where('id', $userId)->first(),
     ]);
 });
 
+Route::get('coba', function () {
+    return view('laporan.pdf', ['item' => [
+        'tgl_pengaduan' => '2023-06-19',
+        'lokasi_pengaduan' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, molestiae. Porro, quo nam! Aspernatur dolorum, aperiam mollitia officia perferendis quaerat hic odio commodi, velit optio eius ex dicta nobis at.',
+        'isi_laporan' => 'Ini adalah isi laporan yang simpel ajah'
+    ], 'data' => [
+        [
+            'tes' => "yoi",
+            'testing' => "testing"
+        ],
+        [
+            'tes' => "yo2",
+            'testing' => "testing2"
+        ]
+    ]]);
+});
+
 Route::prefix('/admin')->group(function () {
-    Route::controller(AdminLaporanController::class)->group(function() {
+    Route::controller(AdminLaporanController::class)->group(function () {
         Route::get('/laporan', 'index')->name('admin.laporan.index')->middleware(['auth', 'admin_or_petugas']);
     });
     Route::get('/dashboard', function () {

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
@@ -110,6 +111,7 @@ class LaporanController extends Controller
         // return dd($user->masyarakat->pengaduan->nextCursor());
         // $masyarakat =  $user['masyarakat'];
         // $pengaduan = $masyarakat['pengaduan'];
+        // Pdf::loadHTML('<h1>Test</h1>')->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf');
 
         return view('laporan.index', compact(['pengaduan']));
     }
