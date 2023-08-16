@@ -23,7 +23,6 @@
 @endphp
 
 <x-guest-layout>
-
     <x-navbar />
 
     <div class="container pt-4">
@@ -85,15 +84,24 @@
                                     @role(['admin', 'petugas'])
                                         <button class="mt-2 btn btn-sm btn-primary"data-bs-toggle="collapse"
                                             data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
-                                        <div class="collapse navbar-collapse" id="{{ 'tanggapan-' . $i }}">
-                                            <form action="{{ route('prsoes.tanggapan.store') }}" method="POST">
+                                        <div class="collapse navbar-collapse container-tanggapan"
+                                            id="{{ 'tanggapan-' . $i }}">
+                                            <form method="POST">
                                                 @csrf
-                                                <textarea class="mt-2 form-control" name="{{ 'tanggapan-' . $item['id_pengaduan'] }}" id=""></textarea>
+                                                <div class="alert alert-danger mt-2 d-none" id="alert-tanggapan"
+                                                    role="alert">
+                                                    tanggapan ini sudah di inputkan sebelumnya
+                                                </div>
 
+                                                <textarea class="mt-2 form-control" name="{{ 'tanggapan-' . $item['id_pengaduan'] }}" id=""></textarea>
                                                 <div class="d-flex justify-content-end gap-2 pt-2">
                                                     <small class="text-secondary">Input diatas bisa diperbesar</small>
-                                                    <button class="btn btn-sm btn-success" name="terima" value="{{$item['tgl_pengaduan']}}">Terima & Kirim</button>
-                                                    <button class="btn btn-sm btn-danger" name="tolak" value="{{$item['tgl_pengaduan']}}">Tolak & Kirim</button>
+                                                    <div class="spinner-border text-blue d-none" id="loading-tanggapan"
+                                                        role="status"></div>
+                                                    <button class="btn btn-sm btn-success" id="terima" name="terima"
+                                                        value="{{ $item['tgl_pengaduan'] }}">Terima & Kirim</button>
+                                                    <button class="btn btn-sm btn-danger" id="tolak" name="tolak"
+                                                        value="{{ $item['tgl_pengaduan'] }}">Tolak & Kirim</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -157,6 +165,54 @@
             </table>
         </div>
 
+        <script>
+            const containerTanggapan = document.querySelectorAll('.container-tanggapan');
+
+            containerTanggapan.forEach((container) => {
+                const form = container.querySelector('form')
+                const buttonTerima = form.querySelector('#terima');
+                const buttonTolak = form.querySelector('#tolak');
+
+                let terima;
+                let tolak;
+
+                buttonTerima.addEventListener('click', function(e) {
+                    terima = e.target.value;
+                })
+
+                buttonTolak.addEventListener('click', function(e) {
+                    tolak = e.target.value;
+                })
+
+                form.addEventListener('submit', function(e) {
+                    const spinnerLoading = form.querySelector('#loading-tanggapan')
+                    const alertDanger = form.querySelector('#alert-tanggapan');
+                    spinnerLoading.classList.remove('d-none');
+                    e.preventDefault();
+
+                    const formData = new FormData(form)
+
+                    formData.append('terima', terima);
+                    formData.append('tolak', tolak);
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', "{{ route('prsoes.tanggapan.store') }}", true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            console.log(JSON.parse(xhr.responseText))
+                            spinnerLoading.classList.add('d-none');
+                            // }
+                        } else {
+                            console.log('error status = ', xhr.status)
+                            spinnerLoading.classList.add('d-none');
+                            alertDanger.classList.remove('d-none');
+                        }
+
+                    };
+                    xhr.send(formData);
+                });
+            })
+        </script>
 
     </div>
 

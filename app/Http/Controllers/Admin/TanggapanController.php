@@ -15,6 +15,7 @@ class TanggapanController extends Controller
     //
     function store(Request $request)
     {
+        // return $request->all();
         $user = Auth::user()->load(['petugas']);
         $isTerima = $request->terima;
         $isTolak = $request->tolak;
@@ -37,6 +38,9 @@ class TanggapanController extends Controller
         ]);
 
         if ($validasi->fails()) {
+            return response()->json([
+                'error' => $validasi->errors()
+            ], 422);
             return redirect()->back()->withErrors($validasi->errors())->withInput($request->all());
         }
 
@@ -52,9 +56,16 @@ class TanggapanController extends Controller
         ]);
 
         if ($insertTanggapan) {
-            return 'berhasil insert';
+            return response()->json([
+                'diterima' => $isTerima ? true : false,
+                'status' => "sukses insert",
+                'data' => $insertTanggapan
+            ], 200);
         } else {
-            return 'gagal insert ya';
+            return response()->json([
+                'status' => 'gagal insert data',
+                'data' => []
+            ], 500);
         }
     }
 }
