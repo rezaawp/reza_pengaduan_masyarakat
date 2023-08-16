@@ -13,7 +13,7 @@
     </li>
 @elseif(auth()->user() &&
         !auth()->user()->hasRole('masyarakat'))
-    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('Name') }} :
+<li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan.index') }}">{{ __('Name') }} :
             {{ auth()->user()->name }}</a>
     </li>
     <li class="nav-item">

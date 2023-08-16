@@ -45,7 +45,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @for ($i = 0; $i < count($pengaduan); $i++)
                         @php
                             $item = $pengaduan[$i];
@@ -60,18 +59,46 @@
 
                                 {{-- Preview isi laporan --}}
                                 <div class="text-socondary">
-                                    {{ Str::limit($item['isi_laporan'], 50, '...') }}<span data-bs-toggle="collapse"
-                                        data-bs-target="#{{ 'col-' . $i }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-arrow-bar-down" width="25"
-                                            height="25" viewBox="0 0 25 25" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M12 20l0 -10"></path>
-                                            <path d="M12 20l4 -4"></path>
-                                            <path d="M12 20l-4 -4"></path>
-                                            <path d="M4 4l16 0"></path>
-                                        </svg></span></div>
+                                    {{ Str::limit($item['isi_laporan'], 50, '...') }}
+
+                                    <span class="switch-icon" data-bs-toggle="switch-icon">
+                                        <span class="switch-icon-a">
+                                            {{-- Icon buka ke bawah --}}
+                                            <span data-bs-toggle="collapse" data-bs-target="#{{ 'col-' . $i }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-arrow-bar-down" width="25"
+                                                    height="25" viewBox="0 0 25 25" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M12 20l0 -10"></path>
+                                                    <path d="M12 20l4 -4"></path>
+                                                    <path d="M12 20l-4 -4"></path>
+                                                    <path d="M4 4l16 0"></path>
+                                                </svg></span>
+                                            {{-- End icon buka ke bawah --}}
+                                        </span>
+                                        <span class="switch-icon-b">
+                                            <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
+                                            {{-- Icon buka ke atas --}}
+                                            <span data-bs-toggle="collapse" data-bs-target="#{{ 'col-' . $i }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-arrow-bar-to-up" width="24"
+                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M12 10l0 10"></path>
+                                                    <path d="M12 10l4 4"></path>
+                                                    <path d="M12 10l-4 4"></path>
+                                                    <path d="M4 4l16 0"></path>
+                                                </svg></span>
+                                            {{-- End icon buka ke atas --}}
+
+                                        </span>
+                                    </span>
+
+                                </div>
 
                                 {{-- From --}}
 
@@ -80,10 +107,30 @@
                                         <span>{{ __('Dari') }} : {{ $item['masyarakat']['user']['name'] }} </span>
                                     </div>
                                 @endrole
-                                <div class="collapse navbar-collapse" id="{{ 'col-' . $i }}">
+                                <div class="collapse navbar-collapse pt-2" id="{{ 'col-' . $i }}">
                                     @role(['admin', 'petugas'])
-                                        <button class="mt-2 btn btn-sm btn-primary"data-bs-toggle="collapse"
-                                            data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="switch-icon" data-bs-toggle="switch-icon">
+                                                <span class="switch-icon-a">
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
+                                                    <!-- SVG icon from http://tabler-icons.io/i/heart -->
+                                                    {{-- Icon A --}}
+                                                </span>
+                                                <span class="switch-icon-b">
+                                                    <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
+                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Tutup Tanggapan') }}</button>
+                                                </span>
+
+                                            </span>
+                                            <button class="btn btn-sm btn-success"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2"></path>
+                                                <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                                                <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z"></path>
+                                             </svg>{{ __('Cetak Laporan') }}</button>
+                                        </div>
                                         <div class="collapse navbar-collapse container-tanggapan"
                                             id="{{ 'tanggapan-' . $i }}">
                                             <form method="POST">
