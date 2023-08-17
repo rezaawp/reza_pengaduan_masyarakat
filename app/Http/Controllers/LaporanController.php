@@ -61,7 +61,7 @@ class LaporanController extends Controller
                     $namaFile = "{$waktuSaatIni}.{$extension}";
                     $moving = $photo->move('storage/images', $namaFile);
 
-                    array_push($images, "{$request->root()}/{$moving->getPathname()}");
+                    array_push($images, "{$request->root()}/{$moving->getPath()}/{$moving->getFilename()}");
                     $photoValidasi[$filename] = true;
                 } else {
                     $photoValidasi[$filename] = false;
