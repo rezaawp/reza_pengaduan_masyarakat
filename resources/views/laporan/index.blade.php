@@ -264,7 +264,8 @@
                             // console.log()
                             // return
                             const tagA = document.createElement('a')
-                            tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result.data.id_pengaduan
+                            tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result
+                                .data.id_pengaduan
                             // tagA.download = 'test.pdf'
                             tagA.target = "_blank"
                             document.body.appendChild(tagA)
@@ -293,11 +294,6 @@
 
                 buttonTerima.addEventListener('click', function(e) {
                     terima = e.target.value;
-                    const badge = document.querySelector('#badge-status-' + index)
-                    badge.classList.remove('bg-red')
-                    badge.classList.remove('bg-green')
-                    badge.classList.add('bg-yellow')
-                    badge.textContent = "Proses"
                 })
 
                 buttonTolak.addEventListener('click', function(e) {
@@ -337,6 +333,12 @@
                             alertDanger.classList.remove('alert-danger')
                             alertDanger.classList.add('alert-success');
                             alertDanger.textContent = "Sudah Berhasil Menanggapi :D"
+                            const badge = document.querySelector('#badge-status-' + index)
+                            badge.classList.remove('bg-red')
+                            badge.classList.remove('bg-green')
+                            badge.classList.add('bg-yellow')
+                            badge.textContent = "Proses"
+
                         } else {
                             if (xhr.status === 422) {
                                 errorCetak.classList.add('d-none')
