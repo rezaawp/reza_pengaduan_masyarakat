@@ -123,7 +123,7 @@ class LaporanController extends Controller
                 'isi_laporan' => $pengaduan->isi_laporan,
                 'images' => $pengaduan->images
             ],
-        ])->setPaper('a4', 'potrait');
-        return $pdf->download("pengaduan-" . $pengaduan->nama_user . "-" . $pengaduan->tgl_pengaduan . "__" . time());
+        ])->setPaper('a4', 'potrait')->setWarnings(false);
+        return $pdf->download("pengaduan-" . $pengaduan->nama_user . "-" . $pengaduan->tgl_pengaduan . "__" . time() . ".pdf");
     }
 }
