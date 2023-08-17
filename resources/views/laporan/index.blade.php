@@ -126,28 +126,32 @@
                                                 </span>
 
                                             </span>
-                                            <div id="cetak-laporan">
-                                                <form>
-                                                    @csrf
-                                                    <input type="text" name="id_pengaduan" class="d-none"
-                                                        value="{{ $item['id_pengaduan'] }}">
-                                                    <button class="btn btn-sm btn-success"><svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            class="icon icon-tabler icon-tabler-printer" width="24"
-                                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                            <path
-                                                                d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2">
-                                                            </path>
-                                                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                                                            <path
-                                                                d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z">
-                                                            </path>
-                                                        </svg>{{ __('Cetak Laporan') }}</button>
-                                                </form>
-                                            </div>
+
+                                            @can('generate laporan')
+                                                <div id="cetak-laporan">
+                                                    <form>
+                                                        @csrf
+                                                        <input type="text" name="id_pengaduan" class="d-none"
+                                                            value="{{ $item['id_pengaduan'] }}">
+                                                        <button class="btn btn-sm btn-success"><svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                class="icon icon-tabler icon-tabler-printer" width="24"
+                                                                height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                                stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                <path
+                                                                    d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2">
+                                                                </path>
+                                                                <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                                                                <path
+                                                                    d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z">
+                                                                </path>
+                                                            </svg>{{ __('Cetak Laporan') }}</button>
+                                                    </form>
+                                                </div>
+                                            @endcan
+
                                         </div>
                                         <div class="collapse navbar-collapse container-tanggapan"
                                             id="{{ 'tanggapan-' . $i }}">
@@ -256,17 +260,18 @@
                     xhr.open('POST', "{{ route('proses.laporan.validasicetak') }}", true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4 && xhr.status === 200) {
-                            console.log(JSON.parse(xhr.responseText))
+                            const result = JSON.parse(xhr.responseText)
+                            // console.log()
+                            // return
                             const tagA = document.createElement('a')
-                            tagA.href = "{{ route('proses.laporan.cetak') }}"
-                            tagA.download = 'test.pdf'
+                            tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result.data.id_pengaduan
+                            // tagA.download = 'test.pdf'
                             tagA.target = "_blank"
                             document.body.appendChild(tagA)
                             tagA.click()
                             document.body.removeChild(tagA)
                         } else {
                             if (xhr.status === 400) {
-                                console.log('validasi error')
                                 const result = JSON.parse(xhr.responseText);
                                 showAlertError(document.querySelector('#error_cetak-' + index), result
                                     .error);
@@ -293,12 +298,10 @@
                     badge.classList.remove('bg-green')
                     badge.classList.add('bg-yellow')
                     badge.textContent = "Proses"
-                    console.log('buttonTerima tigger')
                 })
 
                 buttonTolak.addEventListener('click', function(e) {
                     tolak = e.target.value;
-                    console.log('buttonTolak tigger')
                 })
 
                 form.addEventListener('submit', function(e) {
@@ -311,14 +314,12 @@
                     const formData = new FormData(form)
 
                     if (terima) {
-                        console.log('tombol terima di klik')
                         formData.append('terima', terima);
                         formData.delete('tolak')
                         terima = null
                     }
 
                     if (tolak) {
-                        console.log('tombol tolak di klik')
                         formData.append('tolak', tolak);
                         formData.delete('terima')
                         tolak = null
@@ -328,7 +329,6 @@
                     xhr.open('POST', "{{ route('prsoes.tanggapan.store') }}", true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4 && xhr.status === 200) {
-                            console.log(JSON.parse(xhr.responseText))
                             spinnerLoading.classList.add('d-none');
 
                             errorCetak.classList.add('d-none')
@@ -346,7 +346,6 @@
                                 alertDanger.textContent = "Sudah pernah ditanggapi"
                             }
                             spinnerLoading.classList.add('d-none');
-                            console.log('error status = ', xhr.status)
                         }
                         formData.delete('terima')
                         formData.delete('tolak')

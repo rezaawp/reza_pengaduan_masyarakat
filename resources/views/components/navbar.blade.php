@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <ul class="navbar-nav">
-                @if ($isMasyarkat)
+                @role('masyarakat')
                     <li class="nav-item ">
                         <a class="nav-link {{ url()->full() == route('laporan.create') ? 'active' : '' }}"
                             href="{{ route('laporan.create') }}">{{ __('Create Report') }}</a>
@@ -42,7 +42,9 @@
                         <a class="nav-link {{ url()->full() == route('laporan.index') ? 'active' : '' }}"
                             href="{{ route('laporan.index') }}">{{ __('My Report') }}</a>
                     </li>
-                @elseif ($isAdmin)
+                @endrole
+
+                @role(['admin', 'petugas'])
                     <li class="nav-item ">
                         <a class="nav-link {{ url()->full() == route('dashboard') ? 'active' : '' }}"
                             href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
@@ -52,7 +54,7 @@
                         <a class="nav-link {{ url()->full() == route('admin.laporan.index') ? 'active' : '' }}"
                             href="{{ route('admin.laporan.index') }}">{{ __('Society Reports') }}</a>
                     </li>
-                @endif
+                @endrole
             </ul>
         </div>
     </div>

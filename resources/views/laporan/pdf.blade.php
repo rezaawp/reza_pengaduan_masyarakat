@@ -47,6 +47,10 @@
         .mb-2 {
             margin-bottom: 20px !important;
         }
+
+        .mt-1 {
+            margin-top: 10px !important;
+        }
     </style>
 </head>
 
@@ -57,6 +61,13 @@
     </center>
 
     <table>
+        <tr>
+            <td style="width: 100px !important" class="align-top">
+                {{ __('Dari') }}</td>
+            <td class="align-top">: </td>
+            <td>{{ $item['dari'] }}
+            </td>
+        </tr>
         <tr>
             <td style="width: 100px !important" class="align-top">
                 {{ __('Dibuat') }}</td>
@@ -80,9 +91,23 @@
                 <span align="justify">{{ $item['isi_laporan'] }}</span>
             </td>
         </tr>
+        <tr>
+            <td style="width: 100px !important" class="align-top">
+                <span>{{ __('Bukti Foto') }}</span>
+            </td>
+            <td class="align-top">: </td>
+            <td>
+                <div class="mt-1">
+                    @foreach ($item['images'] as $image)
+                        <img src="{{$image}}" alt="" width="200">
+                    @endforeach
+                </div>
+            </td>
+        </tr>
     </table>
 
-    <table id="customers" class="mt-2">
+    <p>Dengan mengakhiri laporan ini, kami ingin mengungkapkan apresiasi yang mendalam atas keberanian dan ketekunan masyarakat dalam mengajukan pengaduan yang relevan dan penting bagi peningkatan lingkungan kami. Laporan-laporan ini tidak hanya mencerminkan partisipasi aktif dalam pembangunan komunitas, tetapi juga mendorong kami untuk terus berkomitmen dalam menjaga transparansi, akuntabilitas, dan peningkatan berkelanjutan. Kami akan melakukan evaluasi menyeluruh terhadap setiap pengaduan yang diajukan, serta mengambil tindakan yang sesuai untuk mengatasi isu-isu yang diungkapkan. Semua kontribusi berharga ini adalah langkah menuju lingkungan yang lebih baik dan lebih adil bagi semua warga. Terima kasih atas dukungan dan kepercayaan Anda dalam upaya ini.</p>
+    {{-- <table id="customers" class="mt-2">
         <tr>
             <th>Company</th>
             <th>Contact</th>
@@ -98,7 +123,9 @@
                 </td>
             </tr>
         @endforeach
-    </table>
+    </table> --}}
+
+
 
 </body>
 
