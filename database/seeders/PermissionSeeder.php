@@ -82,7 +82,8 @@ class PermissionSeeder extends Seeder
             'nik' => '1234567890123456',
             'nama' => 'Reza Khoirul Wijaya Putra',
             'username' => 'rezawp',
-            'telp' => '081512341234'
+            'telp' => '081512341234',
+            'user_id' => $user->id
         ]);
 
         $masyarakatId = $masyarakat->id;
