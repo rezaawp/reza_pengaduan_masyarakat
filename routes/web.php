@@ -41,20 +41,15 @@ Route::get('user', function () {
 });
 
 Route::get('coba', function () {
-    return view('laporan.pdf', ['item' => [
-        'tgl_pengaduan' => '2023-06-19',
-        'lokasi_pengaduan' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, molestiae. Porro, quo nam! Aspernatur dolorum, aperiam mollitia officia perferendis quaerat hic odio commodi, velit optio eius ex dicta nobis at.',
-        'isi_laporan' => 'Ini adalah isi laporan yang simpel ajah'
-    ], 'data' => [
-        [
-            'tes' => "yoi",
-            'testing' => "testing"
+    return view('laporan.pdf', [
+        'item' => [
+            'dari' => "Reza Khoirul Wijaya Putra",
+            'tgl_pengaduan' => "2023-06-23",
+            'lokasi_pengaduan' => "Jalan Karawang",
+            'isi_laporan' => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis tenetur saepe eveniet labore architecto optio corporis veniam a amet. Rem natus non eveniet illo doloribus enim odit, soluta dicta excepturi quisquam, magni architecto laborum doloremque totam repellendus! Reprehenderit id, molestias esse incidunt suscipit numquam nam doloremque a tenetur unde amet rerum. Qui sunt, dignissimos, enim, consectetur architecto nostrum molestias accusamus minus omnis ab saepe quaerat nisi dolorum velit odio voluptatem labore! Ex dicta quisquam quibusdam enim ratione sed est sunt fugit accusantium porro incidunt, exercitationem ea repudiandae neque quidem cum, facilis et nam laborum nemo impedit nesciunt. Ipsa, dolores rem?",
+            'images' => ['./storage/images/yoi']
         ],
-        [
-            'tes' => "yo2",
-            'testing' => "testing2"
-        ]
-    ]]);
+]);
 });
 
 Route::prefix('/admin')->group(function () {

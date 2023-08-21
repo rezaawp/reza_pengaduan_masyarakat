@@ -8,6 +8,12 @@
 
 <head>
     <style>
+        body {
+            padding-left: 40px;
+            padding-right: 40px;
+            line-height: 1.5
+        }
+
         #customers {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -57,8 +63,14 @@
 <body>
 
     <center>
-        <h1>Laporan Masyarakat</h1>
+        <span style="display: block; font-size: 40px; font-weight: bold">Laporan Masyarakat</span>
+        <span>
+            Jl. Panorama Indah
+        </span>
+        <span style="display: block">Email : rezaaawp@gmail.com | No. Telp : 6295714148247</span>
     </center>
+
+    <hr>
 
     <table>
         <tr>
@@ -88,7 +100,7 @@
             </td>
             <td class="align-top">: </td>
             <td>
-                <span align="justify">{{ $item['isi_laporan'] }}</span>
+                <span style="display: block;text-align:justify">{{ $item['isi_laporan'] }}</span>
             </td>
         </tr>
         <tr>
@@ -99,14 +111,21 @@
             <td>
                 <div class="mt-1">
                     @foreach ($item['images'] as $image)
-                        <img src="{{$image}}" alt="" width="200">
+                        <img src="{{ $image }}" alt="" width="200">
                     @endforeach
                 </div>
             </td>
         </tr>
     </table>
 
-    <p>Dengan mengakhiri laporan ini, kami ingin mengungkapkan apresiasi yang mendalam atas keberanian dan ketekunan masyarakat dalam mengajukan pengaduan yang relevan dan penting bagi peningkatan lingkungan kami. Laporan-laporan ini tidak hanya mencerminkan partisipasi aktif dalam pembangunan komunitas, tetapi juga mendorong kami untuk terus berkomitmen dalam menjaga transparansi, akuntabilitas, dan peningkatan berkelanjutan. Kami akan melakukan evaluasi menyeluruh terhadap setiap pengaduan yang diajukan, serta mengambil tindakan yang sesuai untuk mengatasi isu-isu yang diungkapkan. Semua kontribusi berharga ini adalah langkah menuju lingkungan yang lebih baik dan lebih adil bagi semua warga. Terima kasih atas dukungan dan kepercayaan Anda dalam upaya ini.</p>
+    <p align="justify">&nbsp; &nbsp; &nbsp; &nbsp;Dengan mengakhiri laporan ini, kami ingin
+        mengungkapkan apresiasi yang mendalam atas keberanian dan ketekunan masyarakat dalam mengajukan pengaduan yang
+        relevan dan penting bagi peningkatan lingkungan kami. Laporan-laporan ini tidak hanya mencerminkan partisipasi
+        aktif dalam pembangunan komunitas, tetapi juga mendorong kami untuk terus berkomitmen dalam menjaga
+        transparansi, akuntabilitas, dan peningkatan berkelanjutan. Kami akan melakukan evaluasi menyeluruh terhadap
+        setiap pengaduan yang diajukan, serta mengambil tindakan yang sesuai untuk mengatasi isu-isu yang diungkapkan.
+        Semua kontribusi berharga ini adalah langkah menuju lingkungan yang lebih baik dan lebih adil bagi semua warga.
+        Terima kasih atas dukungan dan kepercayaan Anda dalam upaya ini.</p>
     {{-- <table id="customers" class="mt-2">
         <tr>
             <th>Company</th>
