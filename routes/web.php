@@ -50,7 +50,7 @@ Route::get('coba', function () {
             'images' => ['./storage/images/yoi']
         ],
 ]);
-});
+})->name('coba');
 
 Route::prefix('/admin')->group(function () {
     Route::controller(AdminLaporanController::class)->group(function () {

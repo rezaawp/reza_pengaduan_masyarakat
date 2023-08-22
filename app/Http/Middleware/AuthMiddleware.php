@@ -73,13 +73,28 @@ class AuthMiddleware implements AuthenticatesRequests
             $guards = [null];
         }
 
+        // dd($this->auth->user()->is_done);
+
         foreach ($guards as $guard) {
             if ($this->auth->guard($guard)->check()) {
+                // if ($this->auth->user());x
+                if (!$this->auth->user()->is_done) {
+                    return $this->_401notdone($request, $guards);
+                }
                 return $this->auth->shouldUse($guard);
             }
         }
 
         $this->unauthenticated($request, $guards);
+    }
+
+    protected function _401notdone($request, array $guards)
+    {
+        throw new AuthenticationException(
+            'Unauthenticated.',
+            $guards,
+            $this->redirectToWhenNotDone($request)
+        );
     }
 
     /**
@@ -107,6 +122,11 @@ class AuthMiddleware implements AuthenticatesRequests
      * @return string|null
      */
     protected function redirectTo(Request $request)
+    {
+        //
+    }
+
+    protected function redirectToWhenNotDone(Request $request)
     {
         //
     }
