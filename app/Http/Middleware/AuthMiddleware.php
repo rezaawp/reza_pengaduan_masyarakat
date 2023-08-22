@@ -73,11 +73,17 @@ class AuthMiddleware implements AuthenticatesRequests
             $guards = [null];
         }
 
-        // dd($this->auth->user()->is_done);
+        // jika middleware nya : ['auth:not_required_to_done']
+        if (in_array('not_required_to_done', $guards)) {
+            if ($this->auth->guard('web')->check()) {
+                return $this->auth->shouldUse('web');
+            }
+        }
 
         foreach ($guards as $guard) {
             if ($this->auth->guard($guard)->check()) {
                 // if ($this->auth->user());x
+                // dd($this->auth->guard($guard)->user());
                 if (!$this->auth->user()->is_done) {
                     return $this->_401notdone($request, $guards);
                 }
