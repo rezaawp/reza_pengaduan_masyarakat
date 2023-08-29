@@ -1,0 +1,2 @@
+fix http://localhost:8000/proses/cetak-laporan/?id_pengaduan=9 ERROR : UNDEFINED ARRAY KEY
+EDIT IMAGE DI WINDOWS TIDAK BISA (TAPI DI LINUX BISA)
