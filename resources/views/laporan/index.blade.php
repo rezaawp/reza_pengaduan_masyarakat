@@ -119,7 +119,7 @@
                                             @role(['admin', 'petugas'])
                                                 <span class="text-red d-none" id="error_cetak-{{ $i }}">
                                                     {{ __('Anda harus menanggapi laporan terlebih dahulu !') }}</span>
-                                                <div class="d-flex justify-content-between">
+                                                <div class="d-flex justify-content-between" style="width: 100% !important">
                                                     <span class="switch-icon" data-bs-toggle="switch-icon">
                                                         <span class="switch-icon-a">
                                                             <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
