@@ -1,25 +1,5 @@
 @php
     use Illuminate\Support\Carbon;
-    // https://livewire.laravel.com/docs/volt
-@endphp
-
-@php
-    $role = auth()
-        ->user()
-        ->getRoleNames()
-        ->toArray();
-    // dd($role);
-    $isAdmin = false;
-    $isMasyarkat = false;
-    $isPetugas = false;
-
-    if (in_array('admin', $role)) {
-        $isAdmin = true;
-    } elseif (in_array('petugas', $role)) {
-        $isPetugas = true;
-    } elseif (in_array('masyarakat', $role)) {
-        $isMasyarkat = true;
-    }
 @endphp
 
 <x-guest-layout>
@@ -84,7 +64,6 @@
                                                     {{-- End icon buka ke bawah --}}
                                                 </span>
                                                 <span class="switch-icon-b">
-                                                    <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
                                                     {{-- Icon buka ke atas --}}
                                                     <span data-bs-toggle="collapse"
                                                         data-bs-target="#{{ 'col-' . $i }}">
@@ -124,11 +103,9 @@
                                                         <span class="switch-icon-a">
                                                             <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
                                                                 data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
-                                                            <!-- SVG icon from http://tabler-icons.io/i/heart -->
                                                             {{-- Icon A --}}
                                                         </span>
                                                         <span class="switch-icon-b">
-                                                            <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
                                                             <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
                                                                 data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Tutup Tanggapan') }}</button>
                                                         </span>
@@ -249,8 +226,10 @@
                                             @method('delete')
                                             <button class="btn btn-danger btn-sm">Delete</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm"
-                                            href="{{ route('admin.laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
+                                        @role('masyarakat')
+                                            <a class="btn btn-warning btn-sm"
+                                                href="{{ route('laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
+                                        @endrole
                                     </div>
                                 </div>
                             </td>
@@ -275,28 +254,20 @@
                 alert.classList.remove('d-none')
             }
 
-            // console.log('formCetakLaporan = ', containerFormCetakLaporan);
-            // console.log(containerTanggapan)
-
             containerFormCetakLaporan.forEach((container, index) => {
                 const form = container.querySelector('form')
 
                 form.addEventListener('submit', function(e) {
                     e.preventDefault()
                     const formData = new FormData(form)
-                    // console.log(formData)
-
                     const xhr = new XMLHttpRequest();
                     xhr.open('POST', "{{ route('proses.laporan.validasicetak') }}", true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             const result = JSON.parse(xhr.responseText)
-                            // console.log()
-                            // return
                             const tagA = document.createElement('a')
                             tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result
                                 .data.id_pengaduan
-                            // tagA.download = 'test.pdf'
                             tagA.target = "_blank"
                             document.body.appendChild(tagA)
                             tagA.click()
@@ -358,7 +329,6 @@
                             spinnerLoading.classList.add('d-none');
 
                             errorCetak.classList.add('d-none')
-                            // alertDanger.classList.add('d-none');
                             alertDanger.classList.remove('d-none');
                             alertDanger.classList.remove('alert-danger')
                             alertDanger.classList.add('alert-success');
