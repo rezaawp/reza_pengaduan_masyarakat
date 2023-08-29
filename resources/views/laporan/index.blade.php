@@ -53,174 +53,196 @@
                             <td class="text-center">{{ $i + 1 }}</td>
                             <td>
                                 {{-- Subject --}}
-                                <p class="strong mb-1">{{ $item['subject'] }}<span id="badge-status-{{ $i }}"
-                                        class="badge {{ $item['status'] === '0' ? 'bg-red' : ($item['status'] === 'proses' ? 'bg-yellow' : 'bg-green') }} ms-2">{{ $item['status'] === '0' ? 'Ditolak' : Str::title($item['status']) }}</span>
-                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <div id="subject-col-1">
+                                        <p class="strong mb-1">{{ $item['subject'] }}<span
+                                                id="badge-status-{{ $i }}"
+                                                class="badge {{ $item['status'] === '0' ? 'bg-red' : ($item['status'] === 'proses' ? 'bg-yellow' : 'bg-green') }} ms-2">{{ $item['status'] === '0' ? 'Ditolak' : Str::title($item['status']) }}</span>
+                                        </p>
 
-                                {{-- Preview isi laporan --}}
-                                <div class="text-socondary">
-                                    {{ Str::limit($item['isi_laporan'], 50, '...') }}
+                                        {{-- Preview isi laporan --}}
+                                        <div class="text-socondary">
+                                            {{ Str::limit($item['isi_laporan'], 50, '...') }}
 
-                                    <span class="switch-icon" data-bs-toggle="switch-icon">
-                                        <span class="switch-icon-a">
-                                            {{-- Icon buka ke bawah --}}
-                                            <span data-bs-toggle="collapse" data-bs-target="#{{ 'col-' . $i }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-arrow-bar-down" width="25"
-                                                    height="25" viewBox="0 0 25 25" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M12 20l0 -10"></path>
-                                                    <path d="M12 20l4 -4"></path>
-                                                    <path d="M12 20l-4 -4"></path>
-                                                    <path d="M4 4l16 0"></path>
-                                                </svg></span>
-                                            {{-- End icon buka ke bawah --}}
-                                        </span>
-                                        <span class="switch-icon-b">
-                                            <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
-                                            {{-- Icon buka ke atas --}}
-                                            <span data-bs-toggle="collapse" data-bs-target="#{{ 'col-' . $i }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="icon icon-tabler icon-tabler-arrow-bar-to-up" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M12 10l0 10"></path>
-                                                    <path d="M12 10l4 4"></path>
-                                                    <path d="M12 10l-4 4"></path>
-                                                    <path d="M4 4l16 0"></path>
-                                                </svg></span>
-                                            {{-- End icon buka ke atas --}}
-
-                                        </span>
-                                    </span>
-
-                                </div>
-
-                                {{-- From --}}
-
-                                @role(['admin', 'petugas'])
-                                    <div>
-                                        <span>{{ __('Dari') }} : {{ $item['masyarakat']['user']['name'] }} </span>
-                                    </div>
-                                @endrole
-                                <div class="collapse navbar-collapse pt-2" id="{{ 'col-' . $i }}">
-                                    @role(['admin', 'petugas'])
-                                        <span class="text-red d-none" id="error_cetak-{{ $i }}">
-                                            {{ __('Anda harus menanggapi laporan terlebih dahulu !') }}</span>
-                                        <div class="d-flex justify-content-between">
                                             <span class="switch-icon" data-bs-toggle="switch-icon">
                                                 <span class="switch-icon-a">
-                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
-                                                        data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
-                                                    <!-- SVG icon from http://tabler-icons.io/i/heart -->
-                                                    {{-- Icon A --}}
+                                                    {{-- Icon buka ke bawah --}}
+                                                    <span data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ 'col-' . $i }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-arrow-bar-down"
+                                                            width="25" height="25" viewBox="0 0 25 25"
+                                                            stroke-width="2" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                            </path>
+                                                            <path d="M12 20l0 -10"></path>
+                                                            <path d="M12 20l4 -4"></path>
+                                                            <path d="M12 20l-4 -4"></path>
+                                                            <path d="M4 4l16 0"></path>
+                                                        </svg></span>
+                                                    {{-- End icon buka ke bawah --}}
                                                 </span>
                                                 <span class="switch-icon-b">
                                                     <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
-                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
-                                                        data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Tutup Tanggapan') }}</button>
-                                                </span>
+                                                    {{-- Icon buka ke atas --}}
+                                                    <span data-bs-toggle="collapse"
+                                                        data-bs-target="#{{ 'col-' . $i }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="icon icon-tabler icon-tabler-arrow-bar-to-up"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="2" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                            </path>
+                                                            <path d="M12 10l0 10"></path>
+                                                            <path d="M12 10l4 4"></path>
+                                                            <path d="M12 10l-4 4"></path>
+                                                            <path d="M4 4l16 0"></path>
+                                                        </svg></span>
+                                                    {{-- End icon buka ke atas --}}
 
+                                                </span>
                                             </span>
 
-                                            @can('generate laporan')
-                                                <div id="cetak-laporan">
-                                                    <form>
+                                        </div>
+
+                                        {{-- From --}}
+
+                                        @role(['admin', 'petugas'])
+                                            <div>
+                                                <span>{{ __('Dari') }} : {{ $item['masyarakat']['user']['name'] }}
+                                                </span>
+                                            </div>
+                                        @endrole
+                                        <div class="collapse navbar-collapse pt-2" id="{{ 'col-' . $i }}">
+                                            @role(['admin', 'petugas'])
+                                                <span class="text-red d-none" id="error_cetak-{{ $i }}">
+                                                    {{ __('Anda harus menanggapi laporan terlebih dahulu !') }}</span>
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="switch-icon" data-bs-toggle="switch-icon">
+                                                        <span class="switch-icon-a">
+                                                            <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
+                                                                data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Beri Tanggapan') }}</button>
+                                                            <!-- SVG icon from http://tabler-icons.io/i/heart -->
+                                                            {{-- Icon A --}}
+                                                        </span>
+                                                        <span class="switch-icon-b">
+                                                            <!-- SVG icon from http://tabler-icons.io/i/heart-filled -->
+                                                            <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
+                                                                data-bs-target="#{{ 'tanggapan-' . $i }}">{{ __('Tutup Tanggapan') }}</button>
+                                                        </span>
+
+                                                    </span>
+
+                                                    @can('generate laporan')
+                                                        <div id="cetak-laporan">
+                                                            <form>
+                                                                @csrf
+                                                                <input type="text" name="id_pengaduan" class="d-none"
+                                                                    value="{{ $item['id_pengaduan'] }}">
+                                                                <button class="btn btn-sm btn-success"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        class="icon icon-tabler icon-tabler-printer"
+                                                                        width="24" height="24" viewBox="0 0 24 24"
+                                                                        stroke-width="2" stroke="currentColor" fill="none"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                                        </path>
+                                                                        <path
+                                                                            d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2">
+                                                                        </path>
+                                                                        <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4">
+                                                                        </path>
+                                                                        <path
+                                                                            d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z">
+                                                                        </path>
+                                                                    </svg>{{ __('Cetak Laporan') }}</button>
+                                                            </form>
+                                                        </div>
+                                                    @endcan
+
+                                                </div>
+                                                <div class="collapse navbar-collapse container-tanggapan"
+                                                    id="{{ 'tanggapan-' . $i }}">
+                                                    <form method="POST">
                                                         @csrf
-                                                        <input type="text" name="id_pengaduan" class="d-none"
-                                                            value="{{ $item['id_pengaduan'] }}">
-                                                        <button class="btn btn-sm btn-success"><svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                class="icon icon-tabler icon-tabler-printer" width="24"
-                                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                                stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                                <path
-                                                                    d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2">
-                                                                </path>
-                                                                <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
-                                                                <path
-                                                                    d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z">
-                                                                </path>
-                                                            </svg>{{ __('Cetak Laporan') }}</button>
+                                                        <div class="alert alert-danger mt-2 d-none" id="alert-tanggapan"
+                                                            role="alert">
+                                                            tanggapan ini sudah di inputkan sebelumnya
+                                                        </div>
+
+                                                        <textarea class="mt-2 form-control" name="{{ 'tanggapan-' . $item['id_pengaduan'] }}" id=""></textarea>
+                                                        <div class="d-flex justify-content-end gap-2 pt-2">
+                                                            <small class="text-secondary">Input diatas bisa
+                                                                diperbesar</small>
+                                                            <div class="spinner-border text-blue d-none"
+                                                                id="loading-tanggapan" role="status"></div>
+                                                            <button class="btn btn-sm btn-success" id="terima"
+                                                                name="terima"
+                                                                value="{{ $item['tgl_pengaduan'] }}">Terima &
+                                                                Kirim</button>
+                                                            <button class="btn btn-sm btn-danger" id="tolak"
+                                                                name="tolak" value="{{ $item['tgl_pengaduan'] }}">Tolak
+                                                                &
+                                                                Kirim</button>
+                                                        </div>
                                                     </form>
                                                 </div>
-                                            @endcan
+                                            @endrole
+                                            <div class="mt-3">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 100px !important" class="align-top">
+                                                            {{ __('Dibuat') }}</td>
+                                                        <td class="align-top">: </td>
+                                                        <td>{{ Carbon::parse($item['tgl_pengaduan'])->translatedFormat('l, j F Y') }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 100px !important" class="align-top">
+                                                            {{ __('Lokasi') }}</td>
+                                                        <td class="align-top">: </td>
+                                                        <td>{{ $item['lokasi_pengaduan'] }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 100px !important" class="align-top">
+                                                            <span>{{ __('Isi laporan') }}</span>
+                                                        </td>
+                                                        <td class="align-top">: </td>
+                                                        <td>
+                                                            <p align="justify">{{ $item['isi_laporan'] }}</p>
+                                                        </td>
+                                                    </tr>
 
-                                        </div>
-                                        <div class="collapse navbar-collapse container-tanggapan"
-                                            id="{{ 'tanggapan-' . $i }}">
-                                            <form method="POST">
-                                                @csrf
-                                                <div class="alert alert-danger mt-2 d-none" id="alert-tanggapan"
-                                                    role="alert">
-                                                    tanggapan ini sudah di inputkan sebelumnya
-                                                </div>
-
-                                                <textarea class="mt-2 form-control" name="{{ 'tanggapan-' . $item['id_pengaduan'] }}" id=""></textarea>
-                                                <div class="d-flex justify-content-end gap-2 pt-2">
-                                                    <small class="text-secondary">Input diatas bisa diperbesar</small>
-                                                    <div class="spinner-border text-blue d-none" id="loading-tanggapan"
-                                                        role="status"></div>
-                                                    <button class="btn btn-sm btn-success" id="terima" name="terima"
-                                                        value="{{ $item['tgl_pengaduan'] }}">Terima & Kirim</button>
-                                                    <button class="btn btn-sm btn-danger" id="tolak" name="tolak"
-                                                        value="{{ $item['tgl_pengaduan'] }}">Tolak & Kirim</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    @endrole
-                                    <div class="mt-3">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 100px !important" class="align-top">
-                                                    {{ __('Dibuat') }}</td>
-                                                <td class="align-top">: </td>
-                                                <td>{{ Carbon::parse($item['tgl_pengaduan'])->translatedFormat('l, j F Y') }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 100px !important" class="align-top">
-                                                    {{ __('Lokasi') }}</td>
-                                                <td class="align-top">: </td>
-                                                <td>{{ $item['lokasi_pengaduan'] }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 100px !important" class="align-top">
-                                                    <span>{{ __('Isi laporan') }}</span>
-                                                </td>
-                                                <td class="align-top">: </td>
-                                                <td>
-                                                    <p align="justify">{{ $item['isi_laporan'] }}</p>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td style="width: 100px !important" class="align-top">
-                                                    <span>{{ __('Images') }}</span>
-                                                </td>
-                                                <td class="align-top">: </td>
-                                                <td>
-                                                    <div>
-                                                        <div class="row">
-                                                            @foreach (json_decode($item['images']['images']) as $image)
-                                                                <div class="col-6 col-md-3 col-sm-6">
-                                                                    <img width="200" src="{{ $image }}"
-                                                                        alt="">
+                                                    <tr>
+                                                        <td style="width: 100px !important" class="align-top">
+                                                            <span>{{ __('Images') }}</span>
+                                                        </td>
+                                                        <td class="align-top">: </td>
+                                                        <td>
+                                                            <div>
+                                                                <div class="row">
+                                                                    @foreach (json_decode($item['images']['images']) as $image)
+                                                                        <div class="col-6 col-md-3 col-sm-6">
+                                                                            <img width="200"
+                                                                                src="{{ $image }}"
+                                                                                alt="">
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="subject-col-2" class="ps-3 d-flex gap-2 justify-content-center flex-column">
+                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                        <button class="btn btn-warning btn-sm">Edit</button>
                                     </div>
                                 </div>
                             </td>
