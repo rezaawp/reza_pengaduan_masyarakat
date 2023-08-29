@@ -23,7 +23,9 @@ Route::prefix('proses')->group(function () {
     });
 
     Route::controller(PengaduanController::class)->group(function () {
-        Route::delete('pengaduan/{id}', 'destroy')->name('proses.pengaduan.delete');
-        Route::put('pengaduan/{id}', 'update')->name('proses.pengaduan.update');
+        Route::put('pengaduan/selesai/{id}', 'pengaduanSelesai')->name('proses.pengaduan.selesai')->middleware(['auth', 'admin_or_petugas']);
+        Route::put('pengaduan/proses/{id}', 'pengaduanProses')->name('proses.pengaduan.proses')->middleware(['auth', 'admin_or_petugas']);
+        Route::delete('pengaduan/{id}', 'destroy')->name('proses.pengaduan.delete')->middleware('auth');
+        Route::put('pengaduan/{id}', 'update')->name('proses.pengaduan.update')->middleware('auth');
     });
 });

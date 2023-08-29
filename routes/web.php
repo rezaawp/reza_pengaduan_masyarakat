@@ -27,6 +27,7 @@ Route::prefix('laporan')->group(function () {
         Route::middleware(['auth', 'masyarakat'])->group(function () {
             Route::get('/create', 'create')->name('laporan.create');
             Route::get('/me', 'index')->name('laporan.index');
+            Route::get('/edit/{id}', 'edit')->name('laporan.edit');
         });
     });
 });

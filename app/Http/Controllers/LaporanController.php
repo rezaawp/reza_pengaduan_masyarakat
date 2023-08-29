@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
 
 class LaporanController extends Controller
 {
@@ -90,8 +91,20 @@ class LaporanController extends Controller
     function index()
     {
         $user = Auth::user()->load(['masyarakat']);
-        $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with('images')->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
+        $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with(['images', 'tanggapan.petugas.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
 
+        // return $pengaduan;
         return view('laporan.index', compact(['pengaduan']));
+    }
+
+    function edit($id)
+    {
+        try {
+            $pengaduan = Pengaduan::with('images')->where('id_pengaduan', $id)->first();
+            $idPengaduan = $id;
+            return view('laporan.edit', compact(['pengaduan', 'idPengaduan']));
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(env('APP_ENV') === 'local' ?  $e->getMessage() : '500 internal server error');
+        }
     }
 }

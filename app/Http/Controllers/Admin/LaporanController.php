@@ -98,33 +98,31 @@ class LaporanController extends Controller
             ->join('users', 'masyarakat.user_id', '=', 'users.id')
             ->select('pengaduan.*', 'tanggapan.*', 'images.*', 'masyarakat.*', 'users.name as nama_user')->first();
 
-        if (!$pengaduan->tanggapan) {
-            return response()->json([
-                'status' => 404,
-                'erorr' => 'tanggapan tidak dapat ditemukan'
-            ], 404);
-        }
+        // if (!$pengaduan->tanggapan) {
+        //     return response()->json([
+        //         'status' => 404,
+        //         'erorr' => 'tanggapan tidak dapat ditemukan'
+        //     ], 404);
+        // }
 
         $images = [];
         foreach (json_decode($pengaduan->images) as $image) {
             $image = explode('/', $image);
 
-            $imagePath = "./";
-            for ($i = 3; $i <= 5; $i++) {
-                if ($i !== 5)
-                    $imagePath .= $image[$i] . '/';
-                if ($i == 5)
-                    $imagePath .= $image[$i];
+            // untuk menghidari error
+            if (count($image) >= 5) {
+                $imagePath = "./";
+                for ($i = 3; $i <= 5; $i++) {
+                    if ($i !== 5)
+                        $imagePath .= $image[$i] . '/';
+                    if ($i == 5)
+                        $imagePath .= $image[$i];
+                }
+            } else {
+                break;
             }
-
             array_push($images, $imagePath);
         }
-
-        // $kopSurat = asset('storage/kop_surat.jpg');
-
-        // return response()->json([
-        //     'asset' => explode('/', $kopSurat),
-        // ]);
 
         $pengaduan->images = $images;
         $pdf = Pdf::loadView('laporan.pdf', [
@@ -134,7 +132,6 @@ class LaporanController extends Controller
                 'lokasi_pengaduan' => $pengaduan->lokasi_pengaduan,
                 'isi_laporan' => $pengaduan->isi_laporan,
                 'images' => $pengaduan->images,
-                // 'kop_surat' =>
             ],
         ])->setPaper('a4', 'potrait')->setWarnings(false);
         return $pdf->download("pengaduan-" . $pengaduan->nama_user . "-" . $pengaduan->tgl_pengaduan . "__" . time() . ".pdf");

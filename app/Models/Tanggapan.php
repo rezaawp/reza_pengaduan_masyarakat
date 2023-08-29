@@ -12,4 +12,8 @@ class Tanggapan extends Model
     protected $table = 'tanggapan';
     protected $primaryKey = 'id_tanggapan';
     protected $guarded = ['id_tanggapan'];
+
+    function petugas() {
+        return $this->belongsTo(Petugas::class, 'id_petugas', 'id_petugas');
+    }
 }

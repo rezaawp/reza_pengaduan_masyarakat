@@ -58,8 +58,8 @@
                 <div class="mb-3">
                     <label class="form-label required">{{ __('Isi Laporan') }}</label>
                     <div>
-                        <textarea type="text" name="isi_laporan" class="form-control js-auto-size" aria-describedby="emailHelp"
-                            placeholder="{{ __('Isi Laporan') }}">{{ $pengaduan->isi_laporan }}</textarea>
+                        <textarea @role(['admin', 'petugas']) disabled @endrole type="text" name="isi_laporan" class="form-control js-auto-size"
+                            aria-describedby="emailHelp" placeholder="{{ __('Isi Laporan') }}">{{ $pengaduan->isi_laporan }}</textarea>
                         <x-input-error :messages="$errors->get('isi_laporan')" class="mt-2" />
                         <small class="form-hint">{{ __('Laporan akan diterima oleh petugas') }}</small>
                     </div>

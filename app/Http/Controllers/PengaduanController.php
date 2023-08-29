@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Pengaduan;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -22,15 +23,16 @@ class PengaduanController extends Controller
             $deleteData = $pengaduan->delete();
 
             if ($deleteData) {
-                return "data sudah berhasil di hapus";
+                return redirect()->back()->with('message', 'data sudah berhasil di hapus');
             }
 
-            return "data gagal di hapus";
+            return redirect()->back()->withErrors(['message' => 'data gagal di hapus']);
         } catch (Exception $e) {
             return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
         }
     }
 
+    // update antara masyarakat dengan admin atau petugas berbeda
     function update(Request $request, $id)
     {
         DB::beginTransaction();
@@ -47,11 +49,18 @@ class PengaduanController extends Controller
                 return redirect()->back()->withErrors($validasi->errors());
             }
 
-            $updateData = $pengaduan->update([
+            $dataUpdatePengaduan = [
                 'subject' => $request->subject,
-                'isi_laporan' => $request->isi_laporan,
                 'lokasi_pengaduan' => $request->detail_alamat,
-            ]);
+            ];
+
+            $isMasyarakat = Auth::user()->hasRole('masyarakat');
+
+            if ($isMasyarakat) {
+                $dataUpdatePengaduan['isi_laporan'] = $request->isi_laporan;
+            }
+
+            $updateData = $pengaduan->update($dataUpdatePengaduan);
 
             if (!$updateData) {
                 return redirect()->back()->withErrors(['error' => 'data tidak dapat di update']);
@@ -116,6 +125,59 @@ class PengaduanController extends Controller
             return redirect()->back()->with('message', 'update data berhasil dilakukan');
         } catch (Exception $e) {
             DB::rollBack();
+            return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
+        }
+    }
+
+    function pengaduanSelesai(Request $request, $id)
+    {
+        try {
+            $pengaduan = Pengaduan::find($id);
+
+            if ($pengaduan->status !== 'proses') {
+                return redirect()->back()->withErrors([
+                    'message' => 'untuk mneyelesaikan laporan, status harus di proses terlebih dahulu'
+                ]);
+            }
+
+            $updatePengaduan = $pengaduan->update([
+                'status' => 'selesai'
+            ]);
+
+            if (!$updatePengaduan) {
+                return redirect()->back()->withErrors([
+                    'message' => 'update gagal'
+                ]);
+            }
+
+            return redirect()->back()->with('message', 'selesai di perbaharui');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
+        }
+    }
+
+    function pengaduanProses(Request $request, $id) {
+        try {
+            $pengaduan = Pengaduan::find($id);
+
+            if ($pengaduan->status !== 'selesai') {
+                return redirect()->back()->withErrors([
+                    'message' => 'untuk mengubah laporan menjadi proses, status harus di selesai terlebih dahulu'
+                ]);
+            }
+
+            $updatePengaduan = $pengaduan->update([
+                'status' => 'proses'
+            ]);
+
+            if (!$updatePengaduan) {
+                return redirect()->back()->withErrors([
+                    'message' => 'update gagal'
+                ]);
+            }
+
+            return redirect()->back()->with('message', 'selesai di perbaharui');
+        } catch (Exception $e) {
             return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
         }
     }

@@ -274,6 +274,14 @@
                                                     @method('put')
                                                     <button class="btn btn-success btn-sm">Selesai</button>
                                                 </form>
+                                            @elseif ($item['status'] === 'selesai')
+                                                <form
+                                                    action="{{ route('proses.pengaduan.proses', ['id' => $item['id_pengaduan']]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <button class="btn btn-warning btn-sm">Proses</button>
+                                                </form>
                                             @endif
                                         @endrole
                                         {{-- @role(['admin', 'petugas'])
