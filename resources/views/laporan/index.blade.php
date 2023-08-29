@@ -87,7 +87,6 @@
                                         </div>
 
                                         {{-- From --}}
-
                                         @role(['admin', 'petugas'])
                                             <div>
                                                 <span>{{ __('Dari') }} : {{ $item['masyarakat']['user']['name'] }}
@@ -98,7 +97,7 @@
                                             @role(['admin', 'petugas'])
                                                 <span class="text-red d-none" id="error_cetak-{{ $i }}">
                                                     {{ __('Anda harus menanggapi laporan terlebih dahulu !') }}</span>
-                                                <div class="d-flex justify-content-between" style="width: 100% !important">
+                                                <div class="d-flex justify-content-between">
                                                     <span class="switch-icon" data-bs-toggle="switch-icon">
                                                         <span class="switch-icon-a">
                                                             <button class="btn btn-sm btn-primary" data-bs-toggle="collapse"
@@ -212,6 +211,31 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    @if ($item['status'] === 'proses' || $item['status'] === 'selesai')
+                                                        <tr>
+                                                            <td style="width: 100px !important" class="align-top">
+                                                                <span>{{ __('Ditanggapi oleh') }}</span>
+                                                            </td>
+                                                            <td class="align-top">: </td>
+                                                            <td>
+                                                                <p align="justify">
+                                                                    {{ $item['tanggapan']['petugas']['user']['name'] }}
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="width: 100px !important" class="align-top">
+                                                                <span>{{ __('Tanggapan') }}</span>
+                                                            </td>
+                                                            <td class="align-top">: </td>
+                                                            <td>
+                                                                <p align="justify">
+                                                                    {{ $item['tanggapan']['tanggapan'] }}</p>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
                                                 </table>
 
                                             </div>
@@ -219,16 +243,51 @@
                                     </div>
                                     <div id="subject-col-2"
                                         class="ps-3 d-flex gap-2 justify-content-center flex-column">
-                                        <form
-                                            action="{{ route('proses.pengaduan.delete', ['id' => $item['id_pengaduan']]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
                                         @role('masyarakat')
-                                            <a class="btn btn-warning btn-sm"
-                                                href="{{ route('laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
+                                            @if ($item['status'] == '0')
+                                                <form class="form-delete"
+                                                    action="{{ route('proses.pengaduan.delete', ['id' => $item['id_pengaduan']]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endif
+                                        @endrole
+
+                                        @role(['admin', 'petugas'])
+                                            <form class="form-delete"
+                                                action="{{ route('proses.pengaduan.delete', ['id' => $item['id_pengaduan']]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        @endrole
+
+                                        @role(['admin', 'petugas'])
+                                            @if ($item['status'] === 'proses')
+                                                <form
+                                                    action="{{ route('proses.pengaduan.selesai', ['id' => $item['id_pengaduan']]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('put')
+                                                    <button class="btn btn-success btn-sm">Selesai</button>
+                                                </form>
+                                            @endif
+                                        @endrole
+                                        {{-- @role(['admin', 'petugas'])
+                                            @if ($item['status'] !== 'proses')
+                                                <a class="btn btn-warning btn-sm"
+                                                    href="{{ route('admin.laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
+                                            @endif
+                                        @endrole --}}
+
+                                        @role('masyarakat')
+                                            @if ($item['status'] == '0')
+                                                <a class="btn btn-warning btn-sm"
+                                                    href="{{ route('laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
+                                            @endif
                                         @endrole
                                     </div>
                                 </div>
@@ -244,6 +303,16 @@
         </div>
 
         <script>
+            const formDelete = document.querySelectorAll(".form-delete")
+            // console.log(formDelete)
+            formDelete.forEach(element => {
+                element.addEventListener("submit", function(event) {
+                    var confirmation = confirm("Apakah anda yakin ingin menghapus data?");
+                    if (!confirmation) {
+                        event.preventDefault(); // Mencegah form untuk submit jika tidak ada konfirmasi
+                    }
+                })
+            });
             const containerTanggapan = document.querySelectorAll('.container-tanggapan');
 
             const containerFormCetakLaporan = document.querySelectorAll('#cetak-laporan');
