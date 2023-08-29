@@ -49,12 +49,13 @@ Route::get('coba', function () {
             'isi_laporan' => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis tenetur saepe eveniet labore architecto optio corporis veniam a amet. Rem natus non eveniet illo doloribus enim odit, soluta dicta excepturi quisquam, magni architecto laborum doloremque totam repellendus! Reprehenderit id, molestias esse incidunt suscipit numquam nam doloremque a tenetur unde amet rerum. Qui sunt, dignissimos, enim, consectetur architecto nostrum molestias accusamus minus omnis ab saepe quaerat nisi dolorum velit odio voluptatem labore! Ex dicta quisquam quibusdam enim ratione sed est sunt fugit accusantium porro incidunt, exercitationem ea repudiandae neque quidem cum, facilis et nam laborum nemo impedit nesciunt. Ipsa, dolores rem?",
             'images' => ['./storage/images/yoi']
         ],
-]);
+    ]);
 })->name('coba');
 
 Route::prefix('/admin')->group(function () {
     Route::controller(AdminLaporanController::class)->group(function () {
         Route::get('/laporan', 'index')->name('admin.laporan.index')->middleware(['auth', 'admin_or_petugas']);
+        Route::get('/laporan/edit/{id}', 'edit')->name('admin.laporan.edit')->middleware(['auth', 'admin_or_petugas']);
     });
     Route::get('/dashboard', function () {
         return view('admin.dashboard');

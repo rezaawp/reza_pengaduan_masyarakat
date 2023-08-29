@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\Admin\TanggapanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PengaduanController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('proses')->group(function () {
@@ -20,4 +21,11 @@ Route::prefix('proses')->group(function () {
             Route::post('tanggapan', 'store')->name('prsoes.tanggapan.store')->middleware('admin_or_petugas');
         });
     });
+
+    Route::controller(PengaduanController::class)->group(function() {
+        Route::delete('pengaduan/{id}', 'destroy')->name('proses.pengaduan.delete');
+        Route::put('pengaduan/{id}', 'update')->name('proses.pengaduan.update');
+    });
+
+
 });

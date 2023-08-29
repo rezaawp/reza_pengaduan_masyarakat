@@ -240,9 +240,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="subject-col-2" class="ps-3 d-flex gap-2 justify-content-center flex-column">
-                                        <button class="btn btn-danger btn-sm">Delete</button>
-                                        <button class="btn btn-warning btn-sm">Edit</button>
+                                    <div id="subject-col-2"
+                                        class="ps-3 d-flex gap-2 justify-content-center flex-column">
+                                        <form
+                                            action="{{ route('proses.pengaduan.delete', ['id' => $item['id_pengaduan']]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <a class="btn btn-warning btn-sm"
+                                            href="{{ route('admin.laporan.edit', ['id' => $item['id_pengaduan']]) }}">Edit</a>
                                     </div>
                                 </div>
                             </td>

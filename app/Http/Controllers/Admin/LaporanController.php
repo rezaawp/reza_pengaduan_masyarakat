@@ -22,6 +22,13 @@ class LaporanController extends Controller
         return view('laporan.index', compact(['pengaduan']));
     }
 
+    function edit($id)
+    {
+        $pengaduan = Pengaduan::with('images')->where('id_pengaduan', $id)->first();
+        $idPengaduan = $id;
+        return view('laporan.edit', compact(['pengaduan', 'idPengaduan']));
+    }
+
     function validasiCetakLaporan(Request $request)
     {
         try {

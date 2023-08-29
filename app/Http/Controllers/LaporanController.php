@@ -18,16 +18,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
-    //
-    private $user;
-    private $masyarakat;
-
-    function __construct()
-    {
-        // $this->user = Auth::user();
-        // $this->masyarakat = $this->user->load(['masyarakat'])['masyarakat'];
-    }
-
     function create()
     {
         return view('laporan.create');
@@ -101,17 +91,6 @@ class LaporanController extends Controller
     {
         $user = Auth::user()->load(['masyarakat']);
         $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with('images')->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
-        // return $pengaduan;
-
-
-        //     $user = Auth::user()->load(['masyarakat.pengaduan.images', 'masyarakat.pengaduan' => function ($q) {
-        //         dd($q->orderBy('id_pengaduan')->cursorPaginate(10)->nextPageUrl());
-        //     }]);
-
-        // return dd($user->masyarakat->pengaduan->nextCursor());
-        // $masyarakat =  $user['masyarakat'];
-        // $pengaduan = $masyarakat['pengaduan'];
-        // Pdf::loadHTML('<h1>Test</h1>')->setPaper('a4', 'landscape')->setWarnings(false)->save('myfile.pdf');
 
         return view('laporan.index', compact(['pengaduan']));
     }
