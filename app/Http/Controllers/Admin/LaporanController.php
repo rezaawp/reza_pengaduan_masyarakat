@@ -120,15 +120,21 @@ class LaporanController extends Controller
             array_push($images, $imagePath);
         }
 
-        $pengaduan->images = $images;
+        // $kopSurat = asset('storage/kop_surat.jpg');
 
+        // return response()->json([
+        //     'asset' => explode('/', $kopSurat),
+        // ]);
+
+        $pengaduan->images = $images;
         $pdf = Pdf::loadView('laporan.pdf', [
             'item' => [
                 'dari' => $pengaduan->nama_user,
                 'tgl_pengaduan' => $pengaduan->tgl_pengaduan,
                 'lokasi_pengaduan' => $pengaduan->lokasi_pengaduan,
                 'isi_laporan' => $pengaduan->isi_laporan,
-                'images' => $pengaduan->images
+                'images' => $pengaduan->images,
+                // 'kop_surat' =>
             ],
         ])->setPaper('a4', 'potrait')->setWarnings(false);
         return $pdf->download("pengaduan-" . $pengaduan->nama_user . "-" . $pengaduan->tgl_pengaduan . "__" . time() . ".pdf");

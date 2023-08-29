@@ -62,17 +62,9 @@
 
 <body>
 
-    <center>
-        <span style="display: block; font-size: 40px; font-weight: bold">Laporan Masyarakat</span>
-        <span>
-            Jl. Panorama Indah
-        </span>
-        <span style="display: block">Email : rezaaawp@gmail.com | No. Telp : 6295714148247</span>
-    </center>
+    <img src="./storage/kop_surat.jpg" width="100%" alt="">
 
-    <hr>
-
-    <table>
+    <table style="margin-top: 20px">
         <tr>
             <td style="width: 100px !important" class="align-top">
                 {{ __('Dari') }}</td>

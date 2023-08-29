@@ -22,10 +22,8 @@ Route::prefix('proses')->group(function () {
         });
     });
 
-    Route::controller(PengaduanController::class)->group(function() {
+    Route::controller(PengaduanController::class)->group(function () {
         Route::delete('pengaduan/{id}', 'destroy')->name('proses.pengaduan.delete');
         Route::put('pengaduan/{id}', 'update')->name('proses.pengaduan.update');
     });
-
-
 });
