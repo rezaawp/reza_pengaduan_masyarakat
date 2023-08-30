@@ -47,6 +47,7 @@ class PermissionSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
+            'is_done' => true
         ]);
 
         Petugas::create([
@@ -60,6 +61,7 @@ class PermissionSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'Petugas User',
             'email' => 'petugas@example.com',
+            'is_done' => true
         ]);
 
         Petugas::create([
@@ -73,6 +75,7 @@ class PermissionSeeder extends Seeder
         $user = \App\Models\User::factory()->create([
             'name' => 'Masyarakat User',
             'email' => 'masyarakat@example.com',
+            'is_done' => true
         ]);
 
 

@@ -75,7 +75,7 @@ class LaporanController extends Controller
                 'isi_laporan' => $input['isi_laporan'],
                 'lokasi_pengaduan' => $input['detail_alamat'],
                 'image_id' => $dataImage['id'],
-                'status' => 'proses'
+                'status' => '0'
             ]);
 
             DB::commit();

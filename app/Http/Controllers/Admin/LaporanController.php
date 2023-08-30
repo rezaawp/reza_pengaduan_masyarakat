@@ -107,17 +107,11 @@ class LaporanController extends Controller
 
         $images = [];
         foreach (json_decode($pengaduan->images) as $image) {
-            $image = explode('/', $image);
+            $image = explode('storage', $image);
 
             // untuk menghidari error
-            if (count($image) >= 5) {
-                $imagePath = "./";
-                for ($i = 3; $i <= 5; $i++) {
-                    if ($i !== 5)
-                        $imagePath .= $image[$i] . '/';
-                    if ($i == 5)
-                        $imagePath .= $image[$i];
-                }
+            if (count($image) >= 2) {
+                $imagePath = "./storage{$image[1]}";
             } else {
                 break;
             }

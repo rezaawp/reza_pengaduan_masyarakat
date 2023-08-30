@@ -34,7 +34,7 @@
                             <td>
                                 {{-- Subject --}}
                                 <div class="d-flex justify-content-between">
-                                    <div id="subject-col-1">
+                                    <div id="subject-col-1" style="width: 100%">
                                         <p class="strong mb-1">{{ $item['subject'] }}<span
                                                 id="badge-status-{{ $i }}"
                                                 class="badge {{ $item['status'] === '0' ? 'bg-red' : ($item['status'] === 'proses' ? 'bg-yellow' : 'bg-green') }} ms-2">{{ $item['status'] === '0' ? 'Ditolak' : Str::title($item['status']) }}</span>
