@@ -11,6 +11,7 @@ class Petugas extends Model
 
     protected $table = 'petugas';
     protected $primaryKey = 'id_petugas';
+    protected $guarded = ['id_petugas'];
 
     function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');

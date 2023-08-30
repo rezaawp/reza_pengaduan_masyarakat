@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_done'
     ];
 
     /**
@@ -64,5 +65,5 @@ class User extends Authenticatable
         return $this->hasMany(SocialAccount::class);
     }
 
-    
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Masyarakat;
+use App\Models\Petugas;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
@@ -21,7 +22,7 @@ use Symfony\Component\Translation\CatalogueMetadataAwareInterface;
 
 use function Pest\Laravel\json;
 
-class RegisteredUserController extends Controller
+class RegisteredAdminController extends Controller
 {
     /**
      * Display the registration view.
@@ -44,7 +45,6 @@ class RegisteredUserController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'nik' => ['required', 'min:16', 'max:16'],
                 'no_telp' => ['required', 'min:10', 'max:15']
             ]);
 
@@ -55,11 +55,10 @@ class RegisteredUserController extends Controller
                 'is_done' => true
             ]);
 
-            $user->assignRole('masyarakat');
+            $user->assignRole('admin');
 
-            $validasiDataMasyarakat = Validator::make(['nik' => $request->nik, 'no_telp' => $request->no_telp], [
-                'nik' => ['unique:masyarakat,nik'],
-                'no_telp' => ['unique:masyarakat,telp']
+            $validasiDataMasyarakat = Validator::make(['no_telp' => $request->no_telp], [
+                'no_telp' => ['unique:petugas,telp']
             ]);
 
             if ($validasiDataMasyarakat->fails()) {
@@ -67,9 +66,8 @@ class RegisteredUserController extends Controller
                 return redirect()->back()->withInput($request->input())->withErrors($validasiDataMasyarakat->errors());
             }
 
-            Masyarakat::create([
+            Petugas::create([
                 'user_id' => $user->id,
-                'nik' => $request->nik,
                 'telp' => $request->no_telp
             ]);
 
