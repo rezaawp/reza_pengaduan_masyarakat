@@ -212,7 +212,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    @if ($item['status'] === 'proses' || $item['status'] === 'selesai')
+                                                    @if (($item['status'] === 'proses' || $item['status'] === 'selesai') && $item['tanggapan'])
                                                         <tr>
                                                             <td style="width: 100px !important" class="align-top">
                                                                 <span>{{ __('Ditanggapi oleh') }}</span>
