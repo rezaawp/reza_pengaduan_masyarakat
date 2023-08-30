@@ -108,7 +108,6 @@ class RegisteredUserController extends Controller
             }
 
             if (in_array('masyarakat', $roles)) {
-                // return "ini adalah masyarakat";
                 $inserMasyarakat = Masyarakat::create([
                     'nik' => $request->nik,
                     'telp' => $request->no_telp,
