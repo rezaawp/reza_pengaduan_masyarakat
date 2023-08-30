@@ -7,7 +7,7 @@
             </div>
 
             <form class="card card-md" method="POST" action="{{ route('proses.lengkapi-data-diri') }}">
-                @csrf 
+                @csrf
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4">
                         {{ __('Lengkapi Data') }}
@@ -74,19 +74,17 @@
                             {{ __('Save') }}
                         </button>
                     </div>
-
-                    <div class="form-footer">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger w-100">
-                                {{ __('Log out') }}
-                            </button>
-                        </form>
-                    </div>
-
                 </div>
             </form>
 
+            <div class="form-footer mb-3">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-danger w-100">
+                        {{ __('Log out') }}
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </x-guest-layout>
