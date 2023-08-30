@@ -62,7 +62,7 @@
 
 <body>
 
-    <img src="./storage/kop_surat.jpg" width="100%" alt="">
+    <img src="./images/kop_surat.jpg" width="100%" alt="">
 
     <table style="margin-top: 20px">
         <tr>
