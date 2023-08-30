@@ -2,3 +2,8 @@ fix http://localhost:8000/proses/cetak-laporan/?id_pengaduan=9 ERROR : UNDEFINED
 EDIT IMAGE DI WINDOWS TIDAK BISA (TAPI DI LINUX BISA)
 
 Membuat formulir pengisian data user (as masyarakat or admin after register)
+
+MEMBUAT DATA IMAGES MENJADI
+KOMPATIBEL
+
+EDIT IMAGE ERROR DI UNDEFINED ARRAY KEY 5
