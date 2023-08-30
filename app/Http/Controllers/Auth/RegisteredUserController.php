@@ -90,7 +90,6 @@ class RegisteredUserController extends Controller
     {
         DB::beginTransaction();
         try {
-            DB::commit();
 
             $user = Auth::user();
             $roles = collect($user->getRoleNames())->toArray();
@@ -103,7 +102,7 @@ class RegisteredUserController extends Controller
 
             $validasi  = Validator::make($request->all(), $rulesValidasi);
 
-            if($validasi->fails()) {
+            if ($validasi->fails()) {
                 return redirect()->back()->withErrors($validasi->errors())->withInput($request->input());
             }
 
@@ -115,12 +114,14 @@ class RegisteredUserController extends Controller
                 ]);
 
                 if (!$inserMasyarakat) {
+                    DB::rollBack();
                     return redirect()->back()->withErrors(['nik' => 'insert masyarakat gagal'])->withInput($request->input());
                 }
 
                 $user = User::where('id', Auth::user()->id);
 
-                if(!$user->first()) {
+                if (!$user->first()) {
+                    DB::rollBack();
                     return redirect()->back()->withErrors(['nik' => 'user tidak dapat ditemukan'])->withInput($request->input());
                 }
 
@@ -128,7 +129,7 @@ class RegisteredUserController extends Controller
                     'password' => bcrypt($request->password),
                     'is_done' => true
                 ]);
-
+                DB::commit();
             }
 
             return redirect()->route('user.home');
