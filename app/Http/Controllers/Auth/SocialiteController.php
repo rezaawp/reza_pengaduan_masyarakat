@@ -65,6 +65,10 @@ class SocialiteController extends Controller
                 'provider_name' => $provider
             ]);
 
+            $user->assignRole('masyarakat');
+
+            $user->givePermissionTo('menulis laporan pengaduan');
+
             // return user
             return $user;
         }

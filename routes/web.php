@@ -41,6 +41,10 @@ Route::get('user', function () {
     ]);
 });
 
+Route::get('lengkapi-data', function() {
+    return view('auth.lengkapi-data');
+})->name('auth.lengkapi-data')->middleware('auth:not_required_to_done');
+
 Route::get('coba', function () {
     return view('laporan.pdf', [
         'item' => [

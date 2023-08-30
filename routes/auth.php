@@ -40,6 +40,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:not_required_to_done')->group(function () {
+    Route::get('lengkapi-data', function () {
+        return view('auth.lengkapi-data');
+    })->name('auth.lengkapi-data');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

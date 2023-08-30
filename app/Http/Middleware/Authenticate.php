@@ -21,6 +21,6 @@ class Authenticate extends Middleware
      */
     protected function redirectToWhenNotDone(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('coba');
+        return $request->expectsJson() ? null : route('auth.lengkapi-data');
     }
 }

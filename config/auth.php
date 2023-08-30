@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'not_required_to_done' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
