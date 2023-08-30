@@ -46,6 +46,7 @@ class PengaduanController extends Controller
             ]);
 
             if ($validasi->fails()) {
+                return "data pengaduan tidak ada";
                 return redirect()->back()->withErrors($validasi->errors());
             }
 
@@ -73,18 +74,23 @@ class PengaduanController extends Controller
 
                 if ($validasiImage->fails()) {
                     DB::rollBack();
+                    return "validasi image gagal";
                     return redirect()->back()->withErrors($validasiImage->errors());
                 }
 
-                $image = $pengaduan->images()->first();
+                $image = $pengaduan->images();
 
                 $imagesSebelumnya = json_decode($image->first()->images);
 
                 // MENGAHAPUS GAMBAR SEBELUMNYA
                 foreach ($imagesSebelumnya as $imageUrl) {
                     $splitImageUrl =  explode("/", $imageUrl);
-                    $imageFileName = $splitImageUrl[5];
-                    File::delete('storage/images/' . $imageFileName);
+                    if (count($splitImageUrl) >= 5) {
+                        $imageFileName = $splitImageUrl[5];
+                        File::delete('storage/images/' . $imageFileName);
+                    } else {
+                        break;
+                    }
                 }
 
                 $photos = $request->file('foto_bukti');
@@ -125,6 +131,7 @@ class PengaduanController extends Controller
             return redirect()->back()->with('message', 'update data berhasil dilakukan');
         } catch (Exception $e) {
             DB::rollBack();
+            return ["500 internal server error", $e->getMessage()];
             return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
         }
     }
