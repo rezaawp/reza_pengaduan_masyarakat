@@ -16,7 +16,7 @@ Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
-    Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+    Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('auth.provider');
     Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
 
     Route::post('register', [RegisteredUserController::class, 'store']);
