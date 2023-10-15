@@ -78,7 +78,6 @@ class PermissionSeeder extends Seeder
             'is_done' => true
         ]);
 
-
         $masy = new Masyarakat();
 
         $masyarakat = Masyarakat::create([
