@@ -265,7 +265,7 @@
                                         @endrole
 
                                         @role(['admin', 'petugas'])
-                                            @if ($item['status'] === 'proses')
+                                            @if ($item['status'] === 'proses' || $diTerima)
                                                 <form
                                                     action="{{ route('proses.pengaduan.selesai', ['id' => $item['id_pengaduan']]) }}"
                                                     method="post">
@@ -304,134 +304,143 @@
                     <div class="d-flex justify-content-end">
                         {{ $pengaduan->links() }}
                     </div>
-
                 </tbody>
             </table>
         </div>
-
-        <script>
-            const formDelete = document.querySelectorAll(".form-delete")
-            // console.log(formDelete)
-            formDelete.forEach(element => {
-                element.addEventListener("submit", function(event) {
-                    var confirmation = confirm("Apakah anda yakin ingin menghapus data?");
-                    if (!confirmation) {
-                        event.preventDefault(); // Mencegah form untuk submit jika tidak ada konfirmasi
-                    }
-                })
-            });
-            const containerTanggapan = document.querySelectorAll('.container-tanggapan');
-
-            const containerFormCetakLaporan = document.querySelectorAll('#cetak-laporan');
-
-            function showAlertError(element, msg) {
-                const alert = element
-                alert.textContent = msg;
-                alert.classList.remove('d-none')
-            }
-
-            containerFormCetakLaporan.forEach((container, index) => {
-                const form = container.querySelector('form')
-
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault()
-                    const formData = new FormData(form)
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', "{{ route('proses.laporan.validasicetak') }}", true);
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            const result = JSON.parse(xhr.responseText)
-                            const tagA = document.createElement('a')
-                            tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result
-                                .data.id_pengaduan
-                            tagA.target = "_blank"
-                            document.body.appendChild(tagA)
-                            tagA.click()
-                            document.body.removeChild(tagA)
-                        } else {
-                            if (xhr.status === 400) {
-                                const result = JSON.parse(xhr.responseText);
-                                showAlertError(document.querySelector('#error_cetak-' + index), result
-                                    .error);
-                            }
-                        }
-                    };
-
-                    xhr.send(formData);
-                })
-            })
-
-            containerTanggapan.forEach((container, index) => {
-                const form = container.querySelector('form')
-                const buttonTerima = form.querySelector('#terima');
-                const buttonTolak = form.querySelector('#tolak');
-
-                let terima;
-                let tolak;
-
-                buttonTerima.addEventListener('click', function(e) {
-                    terima = e.target.value;
-                })
-
-                buttonTolak.addEventListener('click', function(e) {
-                    tolak = e.target.value;
-                })
-
-                form.addEventListener('submit', function(e) {
-                    const spinnerLoading = form.querySelector('#loading-tanggapan')
-                    const alertDanger = form.querySelector('#alert-tanggapan');
-                    const errorCetak = document.querySelector('#error_cetak-' + index)
-                    spinnerLoading.classList.remove('d-none');
-                    e.preventDefault();
-
-                    const formData = new FormData(form)
-
-                    if (terima) {
-                        formData.append('terima', terima);
-                        formData.delete('tolak')
-                        terima = null
-                    }
-
-                    if (tolak) {
-                        formData.append('tolak', tolak);
-                        formData.delete('terima')
-                        tolak = null
-                    }
-
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', "{{ route('prsoes.tanggapan.store') }}", true);
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            spinnerLoading.classList.add('d-none');
-
-                            errorCetak.classList.add('d-none')
-                            alertDanger.classList.remove('d-none');
-                            alertDanger.classList.remove('alert-danger')
-                            alertDanger.classList.add('alert-success');
-                            alertDanger.textContent = "Sudah Berhasil Menanggapi :D"
-                            const badge = document.querySelector('#badge-status-' + index)
-                            badge.classList.remove('bg-red')
-                            badge.classList.remove('bg-green')
-                            badge.classList.add('bg-yellow')
-                            badge.textContent = "Proses"
-
-                        } else {
-                            if (xhr.status === 422) {
-                                errorCetak.classList.add('d-none')
-                                alertDanger.classList.remove('d-none');
-                                alertDanger.classList.remove('alet-success');
-                                alertDanger.classList.add('alert-danger');
-                                alertDanger.textContent = "Sudah pernah ditanggapi"
-                            }
-                            spinnerLoading.classList.add('d-none');
-                        }
-                        formData.delete('terima')
-                        formData.delete('tolak')
-                    };
-                    xhr.send(formData);
-                });
-            })
-        </script>
-
     </div>
 </div>
+
+<script>
+    // console.log(Livewire)
+    const formDelete = document.querySelectorAll(".form-delete")
+    // console.log(formDelete)
+    formDelete.forEach(element => {
+        element.addEventListener("submit", function(event) {
+            var confirmation = confirm("Apakah anda yakin ingin menghapus data?");
+            if (!confirmation) {
+                event.preventDefault(); // Mencegah form untuk submit jika tidak ada konfirmasi
+            }
+        })
+    });
+    const containerTanggapan = document.querySelectorAll('.container-tanggapan');
+
+    const containerFormCetakLaporan = document.querySelectorAll('#cetak-laporan');
+
+    function showAlertError(element, msg) {
+        const alert = element
+        alert.textContent = msg;
+        alert.classList.remove('d-none')
+    }
+
+    containerFormCetakLaporan.forEach((container, index) => {
+        const form = container.querySelector('form')
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+            const formData = new FormData(form)
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', "{{ route('proses.laporan.validasicetak') }}", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const result = JSON.parse(xhr.responseText)
+                    const tagA = document.createElement('a')
+                    tagA.href = "{{ route('proses.laporan.cetak') }}" + '/?id_pengaduan=' + result
+                        .data.id_pengaduan
+                    tagA.target = "_blank"
+                    document.body.appendChild(tagA)
+                    tagA.click()
+                    document.body.removeChild(tagA)
+                } else {
+                    if (xhr.status === 400) {
+                        const result = JSON.parse(xhr.responseText);
+                        showAlertError(document.querySelector('#error_cetak-' + index), result
+                            .error);
+                    }
+                }
+            };
+
+            xhr.send(formData);
+        })
+    })
+
+    containerTanggapan.forEach((container, index) => {
+        const form = container.querySelector('form')
+        const buttonTerima = form.querySelector('#terima');
+        const buttonTolak = form.querySelector('#tolak');
+
+        let terima;
+        let tolak;
+
+        buttonTerima.addEventListener('click', function(e) {
+            terima = e.target.value;
+        })
+
+        buttonTolak.addEventListener('click', function(e) {
+            tolak = e.target.value;
+        })
+
+        form.addEventListener('submit', function(e) {
+            const spinnerLoading = form.querySelector('#loading-tanggapan')
+            const alertDanger = form.querySelector('#alert-tanggapan');
+            const errorCetak = document.querySelector('#error_cetak-' + index)
+            spinnerLoading.classList.remove('d-none');
+            e.preventDefault();
+
+            const formData = new FormData(form)
+
+            if (terima) {
+                formData.append('terima', terima);
+                // this.Livewire.emit('terima', true);
+                // console.log(window.Livewire.emit())
+                // return
+                formData.delete('tolak')
+                terima = null
+            }
+
+            if (tolak) {
+                formData.append('tolak', tolak);
+                formData.delete('terima')
+                tolak = null
+            }
+
+            // const Livewire = Livewire
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', "{{ route('prsoes.tanggapan.store') }}", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    spinnerLoading.classList.add('d-none');
+                    errorCetak.classList.add('d-none')
+                    alertDanger.classList.remove('d-none');
+                    alertDanger.classList.remove('alert-danger')
+                    alertDanger.classList.add('alert-success');
+                    alertDanger.textContent = "Sudah Berhasil Menanggapi :D"
+                    const badge = document.querySelector('#badge-status-' + index)
+                    badge.classList.remove('bg-red')
+                    badge.classList.remove('bg-green')
+                    badge.classList.add('bg-yellow')
+                    badge.textContent = "Proses"
+                    let res = xhr.responseText;
+                    res = JSON.parse(res)
+                    if (res.diterima) {
+                        // setTimeout(() => {
+                        //     window.livewire.emit('terima', 'true')
+                        // }, 1000);
+                    }
+                } else {
+                    if (xhr.status === 422) {
+                        errorCetak.classList.add('d-none')
+                        alertDanger.classList.remove('d-none');
+                        alertDanger.classList.remove('alet-success');
+                        alertDanger.classList.add('alert-danger');
+                        alertDanger.textContent = "Sudah pernah ditanggapi"
+                    }
+                    spinnerLoading.classList.add('d-none');
+                }
+                formData.delete('terima')
+                formData.delete('tolak')
+            };
+            xhr.send(formData);
+        });
+    })
+</script>
