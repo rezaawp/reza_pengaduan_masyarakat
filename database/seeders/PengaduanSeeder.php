@@ -14,7 +14,7 @@ class PengaduanSeeder extends Seeder
     public function run(): void
     {
         Pengaduan::factory(10)->create([
-            'status' => 'proses',
+            'status' => '0',
         ]);
     }
 }

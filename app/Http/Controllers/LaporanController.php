@@ -90,11 +90,13 @@ class LaporanController extends Controller
 
     function index()
     {
-        $user = Auth::user()->load(['masyarakat']);
-        $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with(['images', 'tanggapan.petugas.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
+        // $user = Auth::user()->load(['masyarakat']);
+        // $pengaduan = Pengaduan::where('nik', $user['masyarakat']['nik'])->with(['images', 'tanggapan.petugas.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
 
-        // return $pengaduan;
-        return view('laporan.index', compact(['pengaduan']));
+        // // return $pengaduan;
+        // return view('laporan.index', compact(['pengaduan']));
+        return view('laporan.index');
+
     }
 
     function edit($id)
@@ -104,7 +106,7 @@ class LaporanController extends Controller
             $idPengaduan = $id;
             return view('laporan.edit', compact(['pengaduan', 'idPengaduan']));
         } catch (Exception $e) {
-            return redirect()->back()->withErrors(env('APP_ENV') === 'local' ?  $e->getMessage() : '500 internal server error');
+            return redirect()->back()->withErrors(env('APP_ENV') === 'local' ? $e->getMessage() : '500 internal server error');
         }
     }
 }

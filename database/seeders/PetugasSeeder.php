@@ -13,7 +13,6 @@ class PetugasSeeder extends Seeder
      */
     public function run(): void
     {
-        //
         Petugas::create([
             'telp' => '08571231231',
             'level' => 'admin',

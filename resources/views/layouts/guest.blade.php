@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/tabler-payments.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/tabler-vendors.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/demo.min.css') }}">
+    @livewireStyles
 </head>
 
 <body>
@@ -27,6 +28,7 @@
 
     <script src="{{ asset('dist/js/tabler.min.js') }}"></script>
     <script src="{{ asset('dist/js/demo.min.js') }}"></script>
+    @livewireScripts
 </body>
 
 </html>

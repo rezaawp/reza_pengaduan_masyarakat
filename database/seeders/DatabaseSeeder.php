@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             ImageSeeder::class,
             PengaduanSeeder::class,
+            PetugasSeeder::class
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

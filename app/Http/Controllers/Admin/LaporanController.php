@@ -18,8 +18,9 @@ class LaporanController extends Controller
     //
     function index()
     {
-        $pengaduan = Pengaduan::with(['images', 'masyarakat.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
-        return view('laporan.index', compact(['pengaduan']));
+        // $pengaduan = Pengaduan::with(['images', 'masyarakat.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
+        // return view('laporan.index', compact(['pengaduan']));
+        return view('laporan.index');
     }
 
     function edit($id)
@@ -32,7 +33,7 @@ class LaporanController extends Controller
     function validasiCetakLaporan(Request $request)
     {
         try {
-            $idPengaduan = (int)$request->id_pengaduan;
+            $idPengaduan = (int) $request->id_pengaduan;
 
             $validasi = Validator::make([
                 'id_pengaduan' => $idPengaduan,
@@ -75,7 +76,7 @@ class LaporanController extends Controller
 
     function cetakLaporan(Request $request)
     {
-        $idPengaduan = (int)$request->id_pengaduan;
+        $idPengaduan = (int) $request->id_pengaduan;
 
         $validasi = Validator::make([
             'id_pengaduan' => $idPengaduan
@@ -90,7 +91,7 @@ class LaporanController extends Controller
             ], 422);
         }
 
-        $pengaduan =  DB::table('pengaduan')
+        $pengaduan = DB::table('pengaduan')
             ->where('pengaduan.id_pengaduan', $idPengaduan)
             ->join('tanggapan', 'pengaduan.id_pengaduan', '=', 'tanggapan.id_pengaduan', 'left')
             ->join('images', 'pengaduan.image_id', '=', 'images.id')
