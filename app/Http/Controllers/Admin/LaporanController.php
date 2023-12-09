@@ -13,24 +13,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class LaporanController extends Controller
-{
+class LaporanController extends Controller {
     //
-    function index()
-    {
+    function index() {
         $pengaduan = Pengaduan::with(['images', 'masyarakat.user'])->orderBy('id_pengaduan', 'DESC')->cursorPaginate(10);
         return view('laporan.index', compact(['pengaduan']));
     }
 
-    function edit($id)
-    {
+    function edit($id) {
         $pengaduan = Pengaduan::with('images')->where('id_pengaduan', $id)->first();
         $idPengaduan = $id;
         return view('laporan.edit', compact(['pengaduan', 'idPengaduan']));
     }
 
-    function validasiCetakLaporan(Request $request)
-    {
+    function validasiCetakLaporan(Request $request) {
         try {
             $idPengaduan = (int)$request->id_pengaduan;
 
@@ -40,7 +36,7 @@ class LaporanController extends Controller
                 'id_pengaduan' => ['required', 'integer']
             ]);
 
-            if ($validasi->fails()) {
+            if($validasi->fails()) {
                 return response()->json([
                     'status' => 422,
                     'error' => $validasi->errors()
@@ -49,7 +45,7 @@ class LaporanController extends Controller
 
             $tanggapan = Pengaduan::where('id_pengaduan', $idPengaduan)->with('tanggapan')->first();
 
-            if (!$tanggapan['tanggapan']) {
+            if(!$tanggapan['tanggapan']) {
                 return response()->json([
                     'status' => 400,
                     'error' => 'pengaduan ini belum diberi tanggapan. silahkan beri tanggapan terlebih dahulu'
@@ -61,7 +57,7 @@ class LaporanController extends Controller
                 'data' => $tanggapan,
             ]);
         } catch (Exception $e) {
-            if (env('APP_ENV') === 'local') {
+            if(env('APP_ENV') === 'local') {
                 return response()->json([
                     'error' => $e->getMessage()
                 ], 500);
@@ -73,8 +69,7 @@ class LaporanController extends Controller
         }
     }
 
-    function cetakLaporan(Request $request)
-    {
+    function cetakLaporan(Request $request) {
         $idPengaduan = (int)$request->id_pengaduan;
 
         $validasi = Validator::make([
@@ -83,14 +78,14 @@ class LaporanController extends Controller
             'id_pengaduan' => ['required', 'integer']
         ]);
 
-        if ($validasi->fails()) {
+        if($validasi->fails()) {
             return response()->json([
                 'status' => 422,
                 'error' => $validasi->errors()
             ], 422);
         }
 
-        $pengaduan =  DB::table('pengaduan')
+        $pengaduan = DB::table('pengaduan')
             ->where('pengaduan.id_pengaduan', $idPengaduan)
             ->join('tanggapan', 'pengaduan.id_pengaduan', '=', 'tanggapan.id_pengaduan', 'left')
             ->join('images', 'pengaduan.image_id', '=', 'images.id')
@@ -106,11 +101,11 @@ class LaporanController extends Controller
         // }
 
         $images = [];
-        foreach (json_decode($pengaduan->images) as $image) {
+        foreach(json_decode($pengaduan->images) as $image) {
             $image = explode('storage', $image);
 
             // untuk menghidari error
-            if (count($image) >= 2) {
+            if(count($image) >= 2) {
                 $imagePath = "./storage{$image[1]}";
             } else {
                 break;
@@ -128,6 +123,7 @@ class LaporanController extends Controller
                 'images' => $pengaduan->images,
             ],
         ])->setPaper('a4', 'potrait')->setWarnings(false);
-        return $pdf->download("pengaduan-" . $pengaduan->nama_user . "-" . $pengaduan->tgl_pengaduan . "__" . time() . ".pdf");
+
+        return $pdf->download("pengaduan-".$pengaduan->nama_user."-".$pengaduan->tgl_pengaduan."__".time().".pdf");
     }
 }
